@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<table id="home">
+
+{% if current_user %}
+<h1>Welcome {{current_user.username}}</h1>
+{% else %}
+<h1>To access your journal, please login.</h1>
+{% endif %}
+<p>
+<br>Welcome to the Aurora Digital Reading Journal. </br>
+
+<br> This site will allow you to record the books you've read and the relevant details of those books
+ such as authors, sypnosis, year released, etc. </br>
+
+<br> Once you've logged in, the journal page will be available.</br>
+
+</p>   
+</table>
+
+
+{% endblock %}   

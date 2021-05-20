@@ -1,0 +1,48 @@
+{% macro nav_item(text, url, extra_class) %}
+<a href="{{ url }}" class="{{ extra_class }} {% if request.path == url %}active{% endif %}">{{ text }}</a>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>Aurora - Digital Reading Journal</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">    
+        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="navbar" id="topnav">
+        <ul>
+            <li><a href="/"><i class="fa fa-fw fa-home"></i>Home</a></li>
+            {% if current_user %}
+            <li><a href="/journal"><i class="fa fa-fw fa-book"></i>Journal</a></li>
+            {% else %}
+            <li><a href="/"><i class="fa fa-fw fa-lock"></i>Journal</a></li>
+            {% endif %}            
+            <li><a href="/update"><i class="fa fa-fw fa-pencil"></i>Update</a></li>    
+            <li><a href="https://github.com/StephenHuang17253/aurora"><i class="fa fa-fw fa-github"></i>My Github</a></li>      
+            {% if current_user %}
+            <li><a href="/logout"><i class="fa fa-fw fa-user"></i>Logout</a></li>
+            {% else %}
+            <li><a href="/login"><i class="fa fa-fw fa-user"></i>Login</a></li>
+            <li><a href="/signup"><i class="fa fa-fw fa-id-card"></i>Register</a></li>    
+            {% endif %}            
+
+        </ul>
+        </div>  
+        <header>Aurora</header>
+        <subhead>Your Digital Reading Journal</subhead>
+
+        <div>
+            {% for message in get_flashed_messages() %}
+                {{message}}
+            {% endfor %}
+        </div>
+        {% include "header.html" %}
+        {% include "nav.html" %}
+        {% block content %}{% endblock %}
+        {% include "footer.html" %}        
+    </body>
+</html>

@@ -1,0 +1,122 @@
+/* @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=El+Messiri&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap'); */
+:root {
+--bg-color: #1a2b3e;
+--main-color: #af8f5c;
+--sub-color: #3a506c;
+--text-color: #c9c8bf;
+}
+
+body {
+    font-family: 'Roboto Mono';
+    color: #c9c8bf ;
+    font-size: 20px;
+    background-color: var(--bg-color);
+    padding: 30px;
+}
+
+h1 {
+    font-family: "Roboto Mono";
+    color:  var(--main-color) ;
+    padding: 10px;
+}
+
+h3 {
+    font-family: "Roboto Mono";
+    color:  #af8f5c ;
+    padding: 10px;
+}
+
+header {
+    font-family: "Roboto Mono";
+    color:   var(--main-color) ;
+    font-size: 425%;
+    padding: 10px;
+}
+
+subhead {
+    padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+    font-family: "Roboto Mono";
+    text-align: left;
+    padding: 15px;
+}
+
+tr {
+    text-align: left;
+}
+th {
+    font-size: 135%;
+}
+tr:hover {var(--sub-color);}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+  
+li {
+    float: left;
+}
+  
+li a {
+    display: block;
+    color: var(--text-color);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    text-shadow: 0 0 25px var(--main-color), 0 0 5px var(--text-color);
+  }
+
+.active {
+    background-color: var(--sub-color);
+}
+
+li:nth-child(5) {
+    float: right;
+}
+
+li:last-child {
+    float: right;
+}
+
+input {
+    padding: 8px 10px;
+    box-sizing: border-box;
+    background-color: var(--text-color);
+    border-radius: 2px;
+    border: var(--bg-color);
+    color: var(--bg-color);
+    display: block;
+    box-sizing: border-box;
+    margin: 8px 0;
+    width: 290px;
+}
+input:focus {
+    background-color: var(--main-color);
+    outline: none;
+}
+
+input[type=submit]:hover {
+    background-color: var(--main-color);
+}
+
+input[type=submit] {
+    width: 290px;
+}
+

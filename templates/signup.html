@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Register</h1>
+<table id = signup>
+<desc>{{ error }}</desc>
+<form method="POST" action="/signup" name="signup">
+    <input type="text" name="username" maxlength=20 placeholder="username (20 character limit)">
+    <input type="password" name="password" maxlgenth=20 placeholder="password (20 character limit)">
+    <input type="submit" class="button" value="Signup">
+</form>
+</table>
+{% endblock %}
