@@ -1,23 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<table id="home">
 
 {% if current_user %}
 <h1>Welcome {{current_user.username}}</h1>
+<p>You have successfully logged in, the journal page is now available.</p>
 {% else %}
 <h1>To access your journal, please login.</h1>
 {% endif %}
-<p>
-<br>Welcome to the Aurora Digital Reading Journal. </br>
 
-<br> This site will allow you to record the books you've read and the relevant details of those books
- such as authors, sypnosis, year released, etc. </br>
-
-<br> Once you've logged in, the journal page will be available.</br>
-
-</p>   
-</table>
+<p><br>This site will allow you to record the books you've read and the relevant details of those books
+ such as its titles, authors, sypnosis, year released, and genres. All of this will be displayed on the Journal page. To make changes to your Journal, go to Update. </br></p>   
 
 
 {% endblock %}   

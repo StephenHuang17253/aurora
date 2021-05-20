@@ -50,6 +50,10 @@ th, td {
     padding: 15px;
 }
 
+p {
+    padding: 10px;
+}
+
 tr {
     text-align: left;
 }

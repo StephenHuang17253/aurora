@@ -22,14 +22,14 @@
             <li><a href="/"><i class="fa fa-fw fa-lock"></i>Journal</a></li>
             {% endif %}            
             <li><a href="/update"><i class="fa fa-fw fa-pencil"></i>Update</a></li>    
-            <li><a href="https://github.com/StephenHuang17253/aurora"><i class="fa fa-fw fa-github"></i>My Github</a></li>      
+            <li><a href="https://github.com/StephenHuang17253/aurora"><i class="fa fa-fw fa-github"></i>Repository</a></li>      
             {% if current_user %}
-            <li><a href="/logout"><i class="fa fa-fw fa-user"></i>Logout</a></li>
+            <li><a href="/logout"><i class="fa fa-fw fa-user-o"></i>Logout</a></li>
+            <li><a><i class="fa fa-fw fa-user-circle"></i>Logged in as {{current_user.username}}</a></li>            
             {% else %}
             <li><a href="/login"><i class="fa fa-fw fa-user"></i>Login</a></li>
             <li><a href="/signup"><i class="fa fa-fw fa-id-card"></i>Register</a></li>    
             {% endif %}            
-
         </ul>
         </div>  
         <header>Aurora</header>

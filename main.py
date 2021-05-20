@@ -61,7 +61,6 @@ def login():
     if request.method == "POST": # request method 
         User = models.Users.query.filter(models.Users.username==request.form.get("username")).first() # form fillable to gain username variable:
         if User and check_password_hash(User.password, request.form.get("password")): # checks to see if the password is correct
-            flash("You have succesfully logged in") # tells the user they have succesfully logged in.
             session['user']=User.userid
             return redirect('/') # redirects to home page
 
