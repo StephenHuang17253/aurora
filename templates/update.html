@@ -1,4 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>This page is a work in progress.</h1>
+<h1>Add new book</h1>
+<form method="POST" action="/update" autocomplete="off">
+    <input type="text" id="title" name="title" placeholder="Title here...">
+    <input type="text" id="year" name="year" placeholder="Year of release here...">
+    <input type="text" id="sypnosis" name="sypnosis" placeholder="Sypnosis here...">
+    <input type="text" id="genre" name="genre" placeholder="Genre here...">
+    <input type="submit" class="button" value="Add">
+  </form>
+
+
 {% endblock %}   
+

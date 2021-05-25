@@ -37,7 +37,16 @@ def journal():
 
 @app.route('/update', methods=["GET", "POST"])
 def update():
-   return render_template("update.html")
+    book = models.Books.query.all()
+    if request.form:
+        new_book = models.Books()
+        new_book.title = request.form.get("title")
+        new_book.sypnosis = request.form.get("sypnosis")   
+        new_book.year = request.form.get("year")
+        new_book.genres = request.form.get("genres")
+        db.session.add(new_book)
+        db.session.commit()
+    return render_template("update.html", book=book)
 
 
 def current_user(): # current user function

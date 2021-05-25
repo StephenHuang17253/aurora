@@ -60,7 +60,11 @@ tr {
 th {
     font-size: 135%;
 }
-tr:hover {var(--sub-color);}
+/*
+tr:hover {
+    text-shadow: 0 0 1px var(--main-color), 0 0 1px var(--text-color);
+}
+*/
 
 
 ul {
@@ -123,4 +127,3 @@ input[type=submit]:hover {
 input[type=submit] {
     width: 290px;
 }
-
