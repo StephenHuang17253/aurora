@@ -1,10 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
+<h1>Add new author</h1>
+<form method="POST" action="/addauthor" autocomplete="off">
+    <input type="text" id="name" name="name" placeholder="Name here...">
+    <input type="submit" class="button" value="Add">
+  </form>
+
 <h1>Add new book</h1>
 <form method="POST" action="/update" autocomplete="off">
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
     <input type="text" id="sypnosis" name="sypnosis" placeholder="Sypnosis here...">
+
+    <label for="genres">Select genre/s:</label>
+    <select id="genres" name="genres" required>
+      <option value="Fantasy">Fantasy</option>
+      <option Value="Science Fiction">Science Fiction</option>
+    </select>
+
+    <label for="authors">Select author/s:</label>
+    <select id="authors" name="authors" required>
+      <option value="Frank Herbert">Frank Herbert</option>
+      <option Value="Brandon Sanderson">Brandon Sanderson</option>
+    </select>
     <input type="submit" class="button" value="Add">
   </form>
 

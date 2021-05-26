@@ -43,12 +43,21 @@ def update():
         new_book.title = request.form.get("title")
         new_book.sypnosis = request.form.get("sypnosis")   
         new_book.year = request.form.get("year")
-        # new_book.genres = request.form.get("genres")
-        # new_book.authors = request.form.get("authors")
+        new_book.genres.name = request.form.get("genres")
+        new_book.authors.name = request.form.get("authors")
         db.session.add(new_book)
         db.session.commit()
     return render_template("update.html", book=book)
 
+
+@app.route('/addauthor', methods=["GET", "POST"])
+def addauthor():
+    if request.form:
+        new_author = models.Authors()
+        new_author.name = request.form.get("name")
+        db.session.add(new_author)
+        db.session.commit()
+    return render_template("update.html")
 
 def current_user(): # current user function
     if session.get("user"): # if it is able to get a session for user
