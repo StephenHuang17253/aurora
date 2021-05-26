@@ -15,6 +15,9 @@ body {
     font-size: 20px;
     background-color: var(--bg-color);
     padding: 30px;
+    text-align: center;
+
+
 }
 
 h1 {
@@ -41,7 +44,8 @@ subhead {
 }
 
 table {
-  border-collapse: collapse;
+    border-collapse: collapse;
+    margin: auto;
 }
 
 th, td {
