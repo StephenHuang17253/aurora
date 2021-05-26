@@ -38,15 +38,6 @@ def journal():
 @app.route('/update', methods=["GET", "POST"])
 def update():
     book = models.Books.query.all()
-    if request.form:
-        new_book = models.Books()
-        new_book.title = request.form.get("title")
-        new_book.sypnosis = request.form.get("sypnosis")   
-        new_book.year = request.form.get("year")
-        new_book.genres.name = request.form.get("genres")
-        new_book.authors.name = request.form.get("authors")
-        db.session.add(new_book)
-        db.session.commit()
     return render_template("update.html", book=book)
 
 
