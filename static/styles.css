@@ -96,7 +96,7 @@ input {
     color: var(--bg-color);
     display: block;
     box-sizing: border-box;
-    margin: 8px 775px;
+    margin: auto;
     width: 290px;
 }
 input:focus {
