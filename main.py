@@ -89,7 +89,7 @@ def login():
             return redirect('/') # redirects to home page
 
         else:
-            return render_template('login.html', error='Username exceeds limit of 20 characters or does not exist')
+            return render_template('login.html', error='Username either exceeds limit of 20 characters or does not exist')
     return render_template("login.html") # the html template for this is login.html
 
 

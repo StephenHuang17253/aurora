@@ -1,12 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Login</h1>
-<table id = login>
-<desc>{{ error }}</desc>
-<form method="POST" name="login">
+<form method="POST" name="login" autocomplete="off">
     <input type="text" name="username" maxlength=20 placeholder="username (20 character limit)">
     <input type="password" name="password" maxlgenth=20 placeholder="password (20 character limit)">
     <input type="submit" class="button" value="Login">
 </form>
-</table>
 {% endblock %}
