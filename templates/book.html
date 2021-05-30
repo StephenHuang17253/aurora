@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% for author in book.authors %}
+{% for genre in book.genres %}
+
+<h1>{{ book.title }}</h1>
+<br>{{ book.title }} is a {{ genre.name }} novel written by author {{ author.name }} and released in the year {{ book.year }}</br>
+
+<br>Sypnosis: {{ book.sypnosis }} </br>
+</p>
+{% endfor %}
+{% endfor %}
+
+
+{% endblock %}

@@ -35,6 +35,12 @@ def journal():
     return render_template("journal.html", book=book, title=journal)
 
 
+@app.route('/book/<int:id>')
+def book(id):
+  book = models.Books.query.filter_by(bookid=id).first_or_404()
+  return render_template('book.html', book=book)
+
+
 @app.route('/update', methods=["GET", "POST"])
 def update():
     book = models.Books.query.all()
@@ -64,6 +70,7 @@ def addauthor():
         db.session.add(new_author)
         db.session.commit()
     return render_template("update.html")
+
 
 def current_user(): # current user function
     if session.get("user"): # if it is able to get a session for user
