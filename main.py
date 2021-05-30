@@ -37,8 +37,8 @@ def journal():
 
 @app.route('/book/<int:id>')
 def book(id):
-  book = models.Books.query.filter_by(bookid=id).first_or_404()
-  return render_template('book.html', book=book)
+    book = models.Books.query.filter_by(bookid=id).first_or_404()
+    return render_template('book.html', book=book)
 
 
 @app.route('/update', methods=["GET", "POST"])
