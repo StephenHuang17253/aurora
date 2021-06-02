@@ -23,8 +23,8 @@
     }
 */
 body {
-    font-family: "Roboto Mono";
-    color: #c9c8bf ;
+    font-family: "Lato";
+    color: var(--text-color) ;
     font-size: 20px;
     background-color: var(--bg-color);
     padding: 30px;
@@ -32,26 +32,21 @@ body {
 }
 
 h1 {
-    font-family: "Roboto Mono";
+    font-family: "Montserrat";
     color:  var(--main-color) ;
     padding: 10px;
 }
 
-h3 {
-    font-family: "Roboto Mono";
-    color:  #af8f5c ;
-    padding: 10px;
-}
 
 header {
-    font-family: "Roboto Mono";
+    font-family: "Montserrat";
     color:   var(--main-color) ;
     font-size: 425%;
     padding: 10px;
 }
 
 subhead {
-    font-family: "Julius Sans One";
+    font-family: "Montserrat";
     padding: 10px;
 }
 
@@ -117,7 +112,7 @@ input:focus {
 }
 
 input[type=submit]:hover {
-    background-color: var(--main-color);
+    background-color: var(--sub-color);
 }
 
 input[type=submit] {
@@ -144,7 +139,7 @@ table {
 
 
 th, td {
-    font-family: "Roboto Mono";
+
     text-align: left;
     padding: 15px;
 }
@@ -157,6 +152,7 @@ tr {
     text-align: left;
 }
 th {
+    font-family: "Montserrat";
     font-size: 135%;
 }
 
