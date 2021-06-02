@@ -9,15 +9,14 @@ from flask import Flask, render_template, session, redirect, url_for, request, B
 from flask_sqlalchemy import SQLAlchemy
 from random import randint, choice
 from werkzeug.security import generate_password_hash, check_password_hash
+from config import Config
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "journal.db"))
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = database_file
-app.secret_key = ("29fc9d808e2fa590040dc20e43d41c7346324bf9fe184273")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 
 import models

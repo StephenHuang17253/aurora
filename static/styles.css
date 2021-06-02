@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=El+Messiri&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap'); */
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 /*Nord Colour Theme */
 
@@ -48,6 +50,7 @@ header {
 subhead {
     font-family: "Montserrat";
     padding: 10px;
+    color:   var(--main-color) ;
 }
 
 
@@ -139,9 +142,8 @@ table {
 
 
 th, td {
-
     text-align: left;
-    padding: 15px;
+    padding: 15px;z
 }
 
 p {
@@ -154,6 +156,8 @@ tr {
 th {
     font-family: "Montserrat";
     font-size: 135%;
+    font-family: "Lato";
+    color: var(--text-color);
 }
 
 .content {
