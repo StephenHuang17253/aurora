@@ -40,6 +40,12 @@ def book(id):
     return render_template('book.html', book=book)
 
 
+@app.route('/author/<int:id>')
+def author(id):
+    author = models.Authors.query.filter_by(authorid=id).first_or_404()
+    return render_template('author.html', author=author)
+
+
 @app.route('/update', methods=["GET", "POST"])
 def update():
     book = models.Books.query.all()
