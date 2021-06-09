@@ -6,24 +6,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 /*Nord Colour Theme */
-
+/*
 :root {
     --bg-color: #242933;
     --main-color: #d8dee9;
     --sub-color: #617b94;
     --text-color: #d8dee9;
 }
-
+*/
 
 /*Rudy Colour Theme */
-/*
+
 :root {
     --bg-color: #1a2b3e;
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
     }
-*/
+
 body {
     font-family: "Lato";
     color: var(--text-color) ;
@@ -43,14 +43,13 @@ h1 {
 header {
     font-family: "Montserrat";
     color:   var(--main-color) ;
-    font-size: 425%;
+    font-size: 445%;
     padding: 10px;
 }
 
 subhead {
     font-family: "Montserrat";
     padding: 10px;
-    color:   var(--main-color) ;
 }
 
 
