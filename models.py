@@ -23,9 +23,9 @@ class Books (db.Model):
     sypnosis = db.Column(db.String(80)) 
     year = db.Column(db.String(80)) 
     
-    authors = db.relationship("Authors", secondary=BooksAuthors, back_populates="booksauthors")
-    users = db.relationship("Users", secondary=BooksUsers, back_populates="booksusers")  
-    genres = db.relationship("Genres", secondary=BooksGenres, back_populates="booksgenres")
+    authors = db.relationship("Authors", secondary=BooksAuthors, back_populates="books")
+    users = db.relationship("Users", secondary=BooksUsers, back_populates="books")  
+    genres = db.relationship("Genres", secondary=BooksGenres, back_populates="books")
 
 
 class Authors (db.Model):
@@ -33,7 +33,7 @@ class Authors (db.Model):
     authorid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80)) 
 
-    booksauthors = db.relationship("Books", secondary=BooksAuthors, back_populates="authors")
+    books = db.relationship("Books", secondary=BooksAuthors, back_populates="authors")
 
 
 class Users (db.Model):
@@ -42,7 +42,7 @@ class Users (db.Model):
     username = db.Column(db.String(80))       
     password = db.Column(db.String(80)) 
 
-    booksusers = db.relationship("Books", secondary=BooksUsers, back_populates="users")
+    books = db.relationship("Books", secondary=BooksUsers, back_populates="users")
 
 
 class Genres (db.Model):
@@ -51,4 +51,4 @@ class Genres (db.Model):
     name = db.Column(db.String(80))       
     description = db.Column(db.String(80)) 
 
-    booksgenres = db.relationship("Books", secondary=BooksGenres, back_populates="genres")
+    books = db.relationship("Books", secondary=BooksGenres, back_populates="genres")

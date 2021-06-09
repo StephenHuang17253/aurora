@@ -45,6 +45,11 @@ def author(id):
     author = models.Authors.query.filter_by(authorid=id).first_or_404()
     return render_template('author.html', author=author)
 
+@app.route('/genre/<int:id>')
+def genre(id):
+    genre = models.Genres.query.filter_by(genreid=id).first_or_404()
+    return render_template('genre.html', genre=genre)
+
 
 @app.route('/update', methods=["GET", "POST"])
 def update():
