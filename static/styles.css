@@ -162,3 +162,31 @@ th {
 .content {
     margin: auto;
 }
+
+td:hover {
+    cursor: pointer;     
+}               
+
+a:link {
+    color: var(--text-color);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:visited {
+    color: var(--text-color);
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--text-color);
+    background-color: transparent;
+    text-decoration: underline;
+  }
+  
+  a:active {
+    color: var(--text-color);
+    background-color: transparent;
+    text-decoration: underline;
+  }
