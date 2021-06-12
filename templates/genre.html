@@ -5,7 +5,11 @@
 
 <h1>{{genre.name}}</h1>
 
-<br>{{ genre.books|map(attribute="title")|join(", ") }}</br>
-</p>
-
+<table>
+    <tr>
+        <td>
+        {{ genre.books|map(attribute="title")|join(", ") }}           
+        </td>
+    </tr>
+</table>
 {% endblock %}

@@ -162,15 +162,13 @@ th {
 .content {
     margin: auto;
 }
-
-td:hover {
-    cursor: pointer;     
-}               
+            
 
 a:link {
     color: var(--text-color);
     background-color: transparent;
     text-decoration: none;
+    cursor: pointer;
   }
   
   a:visited {

@@ -1,12 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-
 <h1>{{author.name}}</h1>
-<br>{{author.name}} is the author of the following books</br>
+<p>{{author.name}} is the author of the following books</p>
 
-<br>{{author.books|map(attribute="title")|join(", ")}}</br>
+
+<table>
+    <tr>
+        <td>
+        {{ author.books|map(attribute="title")|join(", ") }}           
+        </td>
+    </tr>
+</table>
+
 </p>
 
 

@@ -6,22 +6,18 @@
 {% endif %}
 
 <table id="journal"> 
-    </div>
         <tr>
             <th colspan = 1>Title</th>
             <th colspan = 1>Year</th>            
-            <th colspan = 1>Sypnosis</th>
             <th colspan = 1>Genre</th>
             <th colspan = 1>Author</th>
-
         </tr>
     {% for book in book %}
         <tr> 
-            <td> <a href="/book/{{ book.bookid }}"> {{  book.title  }} </a></td>
-            <td>{{  book.year   }}</td>   
-            <td>{{  book.sypnosis   }}</td>
-            <td> <a href="/genre/{{ book.genreid }}">{{  book.genres|map(attribute="name")|join(", ")    }}</a></td>
-            <td>{{  book.authors|map(attribute="name")|join(", ")   }}</td>
+            <td> <a href="/book/{{ book.title }}"> {{ book.title }} </a></td>
+            <td>{{ book.year }}</td>   
+            <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}"> {{ book.genres|map(attribute="name")|join(", ") }}</a></td>
+            <td> <a href="/author/{{ book.authors|map(attribute='name')|join(', ') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
         </tr>
     {% endfor %}
 

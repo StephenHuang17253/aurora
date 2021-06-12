@@ -29,25 +29,31 @@ def home():
 
 @app.route('/journal', methods=["GET", "POST"])
 def journal():
-    #book = Books.query.filter_by(title="Dune").first_or_404()
     book = models.Books.query.all()
-    return render_template("journal.html", book=book, title=journal)
+    return render_template("journal.html", book=book)
 
 
-@app.route('/book/<int:id>')
-def book(id):
-    book = models.Books.query.filter_by(bookid=id).first_or_404()
+@app.route('/testjournal/', methods=["GET", "POST"])
+def testjournal():
+    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
+    return render_template("testjournal.html", user=user, userid=user)
+
+
+@app.route('/book/<title>')
+def book(title):
+    book = models.Books.query.filter_by(title=title).first_or_404()
     return render_template('book.html', book=book)
 
 
-@app.route('/author/<int:id>')
-def author(id):
-    author = models.Authors.query.filter_by(authorid=id).first_or_404()
-    return render_template('author.html', author=author)
+@app.route('/author/<name>')
+def author(name):
+    author = models.Authors.query.filter_by(name=name).first_or_404()
+    book = models.Books.query.all()
+    return render_template('author.html', author=author, book=book)
 
-@app.route('/genre/<int:id>')
-def genre(id):
-    genre = models.Genres.query.filter_by(genreid=id).first_or_404()
+@app.route('/genre/<name>')
+def genre(name):
+    genre = models.Genres.query.filter_by(name=name).first_or_404()
     return render_template('genre.html', genre=genre)
 
 
@@ -64,7 +70,6 @@ def addbook():
         new_book.title = request.form.get("title")
         new_book.sypnosis = request.form.get("sypnosis")   
         new_book.year = request.form.get("year")
-        genre_options = models.Genres()
         new_book.genres.name = request.form.get("genres")
         new_book.authors.name = request.form.get("authors")
         db.session.add(new_book)
