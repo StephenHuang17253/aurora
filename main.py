@@ -2,6 +2,9 @@
 Stephen Huang
 03/05/21 - 
 Year 13 Flask webapp: Digital Reading Log/Journal
+git config --global user.email "17253@burnside.school.nz"
+git config --global user.name "StephenHuang17253"
+^ Have my git config pasted here to speed up pushing commits at end of day.
 """
 
 import os
@@ -35,6 +38,7 @@ def journal():
 
 @app.route('/testjournal/', methods=["GET", "POST"])
 def testjournal():
+    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     return render_template("testjournal.html", user=user, userid=user)
 
