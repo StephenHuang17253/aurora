@@ -1,10 +1,12 @@
 /* @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css?family=El+Messiri&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap'); */
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral&display=swap');
 /*Nord Colour Theme */
 /*
 :root {
@@ -22,10 +24,13 @@
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
+    --font-header: "Libre Baskerville";
+    --font-body: "Spectral";
+    --font-nav: "Julius Sans One";
     }
 
 body {
-    font-family: "Lato";
+    font-family: var(--font-body);
     color: var(--text-color) ;
     font-size: 20px;
     background-color: var(--bg-color);
@@ -34,21 +39,21 @@ body {
 }
 
 h1 {
-    font-family: "Montserrat";
+    font-family: var(--font-header);
     color:  var(--main-color) ;
     padding: 10px;
 }
 
 
 header {
-    font-family: "Montserrat";
+    font-family: var(--font-header);
     color:   var(--main-color) ;
     font-size: 445%;
     padding: 10px;
 }
 
 subhead {
-    font-family: "Montserrat";
+    font-family: var(--font-header);
     padding: 10px;
 }
 
@@ -65,7 +70,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: "Julius Sans One";
+    font-family: var(--font-nav);
 }
   
 li {
@@ -153,9 +158,8 @@ tr {
     text-align: left;
 }
 th {
-    font-family: "Montserrat";
+    font-family: var(--font-header);;
     font-size: 135%;
-    font-family: "Lato";
     color: var(--text-color);
 }
 

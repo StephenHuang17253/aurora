@@ -39,7 +39,6 @@ def journal():
 @app.route('/testjournal/', methods=["GET", "POST"])
 def testjournal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
-    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     return render_template("testjournal.html", user=user, userid=user)
 
 
