@@ -66,6 +66,16 @@ def update():
     return render_template("update.html", book=book)
 
 
+@app.route('/updatetitle', methods=["POST"])
+def updatetitle():
+    new_title = request.form.get("new_title") #First we request the new title.
+    old_title = request.form.get("old_title") #Then we look for the old title.
+    book = models.Books.query.filter_by(title=old_title).first() #Finds the first title that matches the old title.
+    book.title = new_title #Replace that book's old title with the new title.
+    db.session.commit() #Commit to the DB.
+    return redirect("/journal")
+
+
 @app.route('/addbook', methods=["GET", "POST"])
 def addbook():
     if request.form:
@@ -76,22 +86,12 @@ def addbook():
         new_book.sypnosis = request.form.get("sypnosis")   
         new_book.year = request.form.get("year")
         author.name = request.form.get('author')        
-        new_book.authors.append(author)
         genre.name = request.form.get('genre')        
+        new_book.authors.append(author)        
         new_book.genres.append(genre)
         db.session.add(new_book)
         db.session.commit()
-    return render_template("update.html")
-
-
-@app.route('/addauthor', methods=["GET", "POST"])
-def addauthor():
-    if request.form:
-        new_author = models.Authors()
-        new_author.name = request.form.get("name")
-        db.session.add(new_author)
-        db.session.commit()
-    return render_template("update.html")
+    return redirect("/")
 
 
 def current_user(): # current user function

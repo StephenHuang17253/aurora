@@ -1,19 +1,39 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Add new author</h1>
-<form method="POST" action="/addauthor" autocomplete="off">
-    <input type="text" id="name" name="name" placeholder="Name here...">
-    <input type="submit" class="button" value="Add">
-  </form>
 
 <h1>Add new book</h1>
 <form method="POST" action="/addbook" autocomplete="off">
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
-    <input type="text" id="sypnosis" name="sypnosis" placeholder="Sypnosis here...">    <input type="text" id="genre" name="genre" placeholder="Genre name here...">
+    <input type="text" id="sypnosis" name="sypnosis" placeholder="Sypnosis here...">    
+    <input type="text" id="genre" name="genre" placeholder="Genre name here...">
     <input type="text" id="author" name="author" placeholder="Author name here...">
-    <input type="submit" class="button" value="Add">
+    <input type="submit" class="button" value="Add book">
   </form>
+
+<br><h1>Make changes to your journal</h1>
+<table id="editjournal"> 
+    <tr>
+        <th colspan = 2>Title</th>
+        <th colspan = 1>Year</th>            
+        <th colspan = 1>Genre</th>
+        <th colspan = 1>Author</th>
+    </tr>
+{% for book in book %}
+    <tr> 
+        <td> <a href="/book/{{ book.title }}"> {{ book.title }} </a></td>
+        <td>
+          <form method="POST" action="/updatetitle" style="display: inline" autocomplete="off">
+            <input type="hidden" value="{{ book.title }}" name="old_title">
+            <input type="text" value="{{ book.title }}" name="new_title">
+            <input type="submit" class="button" value="Update">
+          </form>
+        </td>
+        <td>{{ book.year }}</td>   
+        <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}"> {{ book.genres|map(attribute="name")|join(", ") }}</a></td>
+        <td> <a href="/author/{{ book.authors|map(attribute='name')|join(', ') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
+    </tr>
+{% endfor %}
 
 
 {% endblock %}   
