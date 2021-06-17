@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+/*
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap'); */
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
@@ -24,6 +24,7 @@
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
+    --font-aurora: "Libre Baskerville";
     --font-header: "Libre Baskerville";
     --font-body: "Spectral";
     --font-nav: "Julius Sans One";
@@ -46,14 +47,14 @@ h1 {
 
 
 header {
-    font-family: var(--font-header);
+    font-family: var(--font-aurora);
     color:   var(--main-color) ;
     font-size: 445%;
-    padding: 10px;
+    padding: 5px;
 }
 
 subhead {
-    font-family: var(--font-header);
+    font-family: var(--font-body);
     padding: 10px;
 }
 

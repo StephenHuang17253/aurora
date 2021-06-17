@@ -70,11 +70,15 @@ def update():
 def addbook():
     if request.form:
         new_book = models.Books()
+        author = models.Authors()
+        genre = models.Genres()
         new_book.title = request.form.get("title")
         new_book.sypnosis = request.form.get("sypnosis")   
         new_book.year = request.form.get("year")
-        new_book.genres.name = request.form.get("genres")
-        new_book.authors.name = request.form.get("authors")
+        author.name = request.form.get('author')        
+        new_book.authors.append(author)
+        genre.name = request.form.get('genre')        
+        new_book.genres.append(genre)
         db.session.add(new_book)
         db.session.commit()
     return render_template("update.html")

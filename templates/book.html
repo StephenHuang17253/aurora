@@ -4,7 +4,7 @@
 
 
 <h1>{{book.title}}</h1>
-<br>{{book.title}} is a {{book.genres|map(attribute="name")|join(", ")}} novel written by {{book.authors|map(attribute="name")|join(", ")}} and released in the year {{book.year}}.</br>
+{{book.title}} is a {{book.genres|map(attribute="name")|join(", ")}} novel written by {{book.authors|map(attribute="name")|join(", ")}} and released in the year {{book.year}}.<br>
 
 <br>Sypnosis: {{book.sypnosis}} </br>
 </p>
