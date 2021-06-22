@@ -25,54 +25,58 @@ db = SQLAlchemy(app)
 import models
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/') #Home
 def home():
     return render_template("home.html")
 
 
-@app.route('/journal', methods=["GET", "POST"])
+@app.route('/journal') #This journal simply displays all books, it will be replaced eventually by one that is user-specific.
 def journal():
     book = models.Books.query.all()
     return render_template("journal.html", book=book)
 
 
-@app.route('/testjournal/', methods=["GET", "POST"])
+@app.route('/testjournal/') #This journal only displays books that are related to the logged in user.
 def testjournal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     return render_template("testjournal.html", user=user, userid=user)
 
 
-@app.route('/book/<title>')
+@app.route('/book/<title>') #Each book has an individual page with its information. Here you can find the sypnosis of a book which you can't find on the journal tables.
 def book(title):
     book = models.Books.query.filter_by(title=title).first_or_404()
     return render_template('book.html', book=book)
 
 
-@app.route('/author/<name>')
+@app.route('/author/<name>') #Each author has their own page that displays all the books they've written.
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
     book = models.Books.query.all()
     return render_template('author.html', author=author, book=book)
 
-@app.route('/genre/<name>')
+@app.route('/genre/<name>') #Each genre has its own page that displays all the books belonging to that genre.
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
     return render_template('genre.html', genre=genre)
 
 
-@app.route('/update', methods=["GET", "POST"])
+@app.route('/update', methods=["GET", "POST"]) #This page allows users to update the database.
 def update():
     book = models.Books.query.all()
     return render_template("update.html", book=book)
 
 
-@app.route('/updatetitle', methods=["POST"])
+@app.route('/updatetitle', methods=["POST"]) #Function to allow users to rename a book.
 def updatetitle():
-    new_title = request.form.get("new_title") #First we request the new title.
-    old_title = request.form.get("old_title") #Then we look for the old title.
-    book = models.Books.query.filter_by(title=old_title).first() #Finds the first title that matches the old title.
-    book.title = new_title #Replace that book's old title with the new title.
-    db.session.commit() #Commit to the DB.
+    try:
+        new_title = request.form.get("new_title") #First we request the new title.
+        old_title = request.form.get("old_title") #Then we look for the old title.
+        book = models.Books.query.filter_by(title=old_title).first() #Finds the first title that matches the old title.
+        book.title = new_title #Replace that book's old title with the new title.
+        db.session.commit() #Commit to the DB.
+    except Exception as e:
+        print("Couldn't update book title")
+        print(e)
     return redirect("/journal")
 
 

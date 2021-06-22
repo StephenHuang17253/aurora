@@ -23,7 +23,7 @@
     <tr> 
         <td> <a href="/book/{{ book.title }}"> {{ book.title }} </a></td>
         <td>
-          <form method="POST" action="/updatetitle" style="display: inline" autocomplete="off">
+          <form method="POST" action='/updatetitle' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{ book.title }}" name="old_title">
             <input type="text" value="{{ book.title }}" name="new_title">
             <input type="submit" class="button" value="Update">

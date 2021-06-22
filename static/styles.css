@@ -106,7 +106,6 @@ input {
     padding: 8px 10px;
     box-sizing: border-box;
     background-color: var(--text-color);
-    border-radius: 2px;
     border: var(--bg-color);
     color: var(--bg-color);
     display: block;
