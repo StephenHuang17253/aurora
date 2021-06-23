@@ -24,9 +24,9 @@
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
-    --font-aurora: "Libre Baskerville";
-    --font-header: "Libre Baskerville";
-    --font-body: "Spectral";
+    --font-aurora: "Montserrat";
+    --font-header: "Montserrat";
+    --font-body: "Lato";
     --font-nav: "Julius Sans One";
     }
 
@@ -142,12 +142,13 @@ select {
 table {
     border-collapse: collapse;
     margin: auto;
+    text-align: left;
 }
 
 
 th, td {
     text-align: left;
-    padding: 15px;z
+    padding: 10px;
 }
 
 p {
@@ -158,9 +159,11 @@ tr {
     text-align: left;
 }
 th {
-    font-family: var(--font-header);;
-    font-size: 135%;
+    font-family: var(--font-body);;
+    font-weight: normal;
+    font-size: 110%;
     color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);    
 }
 
 .content {
