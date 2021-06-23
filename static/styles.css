@@ -165,12 +165,7 @@ th {
     color: var(--text-color);
     border-bottom: thin solid var(--text-color);    
 }
-th:last-child{
-    text-align: right;
-}
-td:last-child{
-    text-align: right;
-}
+
 .content {
     margin: auto;
 }

@@ -1,5 +1,7 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends 'layout.html' %}
+
+{% block content %}         
+
 
 {% if current_user %}
 <h1>Hey {{current_user.username}}, these are the books you've read.</h1>
@@ -8,18 +10,18 @@
 <table id="journal"> 
         <tr>
             <th colspan = 1>Title</th>
-            <th colspan = 1>Author</th>            
+            <th colspan = 1>Author</th>  
             <th colspan = 1>Genre</th>
-            <th colspan = 1>Year</th>
+            <th colspan = 1>Year</th>            
         </tr>
-    {% for book in book %}
+        {% for book in user.books %}
         <tr> 
-            <td> <a href="/book/{{ book.title }}"> {{ book.title }} </a></td>
-            <td> <a href="/author/{{ book.authors|map(attribute='name')|join(', ') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
-            <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}"> {{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-            <td>{{ book.year }}</td>   
+            <td>{{ book.title }} </td>
+            <td>{{ book.authors|join(', ', attribute='name') }}</td>
+            <td>{{ book.genres|join(', ', attribute='name') }}</td>
+            <td>{{ book.year }} </td>   
         </tr>
-    {% endfor %}
+        {% endfor%}
+    </table>
 
-</table>
-{% endblock %}                                                                                   
+{% endblock %}

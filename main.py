@@ -30,16 +30,16 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/journal') #This journal simply displays all books, it will be replaced eventually by one that is user-specific.
-def journal():
+@app.route('/allbooks') #This page simply displays all books, it will be replaced eventually by one that is user-specific.
+def allbooks():
     book = models.Books.query.all()
-    return render_template("journal.html", book=book)
+    return render_template("allbooks.html", book=book)
 
 
-@app.route('/testjournal/') #This journal only displays books that are related to the logged in user.
-def testjournal():
+@app.route('/journal') #This journal only displays books that are related to the logged in user.
+def journal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
-    return render_template("testjournal.html", user=user, userid=user)
+    return render_template("journal.html", user=user, userid=user)
 
 
 @app.route('/book/<title>') #Each book has an individual page with its information. Here you can find the sypnosis of a book which you can't find on the journal tables.
