@@ -163,9 +163,14 @@ th {
     font-weight: normal;
     font-size: 110%;
     color: var(--text-color);
-    border-bottom: 1px solid var(--text-color);    
+    border-bottom: thin solid var(--text-color);    
 }
-
+th:last-child{
+    text-align: right;
+}
+td:last-child{
+    text-align: right;
+}
 .content {
     margin: auto;
 }
