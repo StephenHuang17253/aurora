@@ -16,9 +16,9 @@
         </tr>
         {% for book in user.books %}
         <tr> 
-            <td>{{ book.title }} </td>
-            <td>{{ book.authors|join(', ', attribute='name') }}</td>
-            <td>{{ book.genres|join(', ', attribute='name') }}</td>
+            <td><a href="/book/{{ book.title }}">{{ book.title }}</a></td>
+            <td><a href="/author/{{book.authors|join(', ', attribute='name') }}">{{ book.authors|join(', ', attribute='name') }}</a></td>
+            <td><a href="/genre/{{book.genres|join(', ', attribute='name') }}">{{ book.genres|join(', ', attribute='name') }}</a></td>
             <td>{{ book.year }} </td>   
         </tr>
         {% endfor%}
