@@ -7,9 +7,19 @@
 
 <table>
     <tr>
-        <td>
-        {{ genre.books|map(attribute="title")|join(", ") }}           
-        </td>
+        <th colspan = 1>Title</th>
+        <th colspan = 1>Author</th>  
+        <th colspan = 1>Genre</th>
+        <th colspan = 1>Year</th>            
     </tr>
+    {% for book in genre.books %}
+    <tr> 
+        <td><a href="/book/{{ book.title }}">{{ book.title }}</a></td>
+        <td><a href="/author/{{book.authors|join(', ', attribute='name') }}">{{ book.authors|join(', ', attribute='name') }}</a></td>
+        <td><a href="/genre/{{book.genres|join(', ', attribute='name') }}">{{ book.genres|join(', ', attribute='name') }}</a></td>
+        <td>{{ book.year }} </td>   
+    </tr>
+    {% endfor%}
 </table>
+
 {% endblock %}
