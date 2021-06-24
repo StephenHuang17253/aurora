@@ -25,48 +25,49 @@ db = SQLAlchemy(app)
 import models
 
 
-@app.route('/') #Home
+@app.route('/', methods=["GET", "POST"])
 def home():
     return render_template("home.html")
 
 
-@app.route('/allbooks') #This page simply displays all books, it will be replaced eventually by one that is user-specific.
-def allbooks():
-    book = models.Books.query.all()
-    return render_template("allbooks.html", book=book)
-
-
-@app.route('/journal') #This journal only displays books that are related to the logged in user.
+@app.route('/journal', methods=["GET", "POST"])
 def journal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     return render_template("journal.html", user=user, userid=user)
 
 
-@app.route('/book/<title>') #Each book has an individual page with its information. Here you can find the sypnosis of a book which you can't find on the journal tables.
+@app.route('/books', methods=["GET", "POST"])
+def books():
+    book = models.Books.query.all()
+    return render_template("allbooks.html", book=book)
+
+
+@app.route('/book/<title>')
 def book(title):
     book = models.Books.query.filter_by(title=title).first_or_404()
     return render_template('book.html', book=book)
 
 
-@app.route('/author/<name>') #Each author has their own page that displays all the books they've written.
+@app.route('/author/<name>')
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
     book = models.Books.query.all()
     return render_template('author.html', author=author, book=book)
 
-@app.route('/genre/<name>') #Each genre has its own page that displays all the books belonging to that genre.
+
+@app.route('/genre/<name>')
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
     return render_template('genre.html', genre=genre)
 
 
-@app.route('/update', methods=["GET", "POST"]) #This page allows users to update the database.
+@app.route('/update', methods=["GET", "POST"])
 def update():
     book = models.Books.query.all()
     return render_template("update.html", book=book)
 
 
-@app.route('/updatetitle', methods=["POST"]) #Function to allow users to rename a book.
+@app.route('/updatetitle', methods=["POST"])
 def updatetitle():
     try:
         new_title = request.form.get("new_title") #First we request the new title.
@@ -75,27 +76,42 @@ def updatetitle():
         book.title = new_title #Replace that book's old title with the new title.
         db.session.commit() #Commit to the DB.
     except Exception as e:
-        print("Couldn't update book title")
+        print("Could not update title")
         print(e)
+    return redirect("/journal")
+
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    title = request.form.get("title")
+    book = models.Books.query.filter_by(title=title).first()
+    db.session.delete(book)
+    db.session.commit()
     return redirect("/journal")
 
 
 @app.route('/addbook', methods=["GET", "POST"])
 def addbook():
     if request.form:
-        new_book = models.Books()
-        author = models.Authors()
-        genre = models.Genres()
-        new_book.title = request.form.get("title")
-        new_book.sypnosis = request.form.get("sypnosis")   
-        new_book.year = request.form.get("year")
-        author.name = request.form.get('author')        
-        genre.name = request.form.get('genre')        
-        new_book.authors.append(author)        
-        new_book.genres.append(genre)
-        db.session.add(new_book)
-        db.session.commit()
-    return redirect("/")
+        try:
+            new_book = models.Books()
+            author = models.Authors()
+            genre = models.Genres()
+            user = models.Users.query.filter_by(userid=session['user']).first_or_404()
+            new_book.title = request.form.get("title")
+            new_book.sypnosis = request.form.get("sypnosis")   
+            new_book.year = request.form.get("year")
+            author.name = request.form.get('author')        
+            genre.name = request.form.get('genre')        
+            new_book.authors.append(author)        
+            new_book.genres.append(genre)
+            new_book.user.append(user)
+            db.session.add(new_book)
+            db.session.commit()
+        except Exception as e:
+            print("Could not update title")
+            print(e)  
+    return redirect("/", user=user)
 
 
 def current_user(): # current user function

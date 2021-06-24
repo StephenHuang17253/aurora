@@ -126,6 +126,7 @@ input[type=submit] {
     width: 290px;
 }
 
+
 select {
     padding: 8px 10px;
     box-sizing: border-box;
@@ -195,3 +196,20 @@ a:link {
     background-color: transparent;
     text-decoration: underline;
   }
+
+.button {
+    transition-duration: 0.25  s;
+    cursor: pointer;
+}
+
+.button[value='Add book']:hover{
+    background-color: green;
+}
+
+.button[value=Update]:hover{
+    background-color: green; 
+}
+
+.button[value=Delete]:hover{
+    background-color: red; 
+}
