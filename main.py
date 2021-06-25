@@ -27,53 +27,52 @@ import models
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-    return render_template("home.html")
+    return render_template("home.html", page_title="Home")
 
 
 @app.route('/journal', methods=["GET", "POST"])
 def journal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
-    return render_template("journal.html", user=user, userid=user)
+    return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
 @app.route('/books', methods=["GET", "POST"])
 def books():
     book = models.Books.query.all()
-    return render_template("allbooks.html", book=book)
+    return render_template("allbooks.html", book=book, page_title="Books")
 
 
 @app.route('/book/<title>')
 def book(title):
     book = models.Books.query.filter_by(title=title).first_or_404()
-    return render_template('book.html', book=book)
+    return render_template('book.html', book=book, page_title=title)
 
 
 @app.route('/author/<name>')
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
-    book = models.Books.query.all()
-    return render_template('author.html', author=author, book=book)
+    return render_template('author.html', author=author, book=book, page_title=author)
 
 
 @app.route('/genre/<name>')
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
-    return render_template('genre.html', genre=genre)
+    return render_template('genre.html', genre=genre, page_title=genre)
 
 
 @app.route('/update', methods=["GET", "POST"])
 def update():
     book = models.Books.query.all()
-    return render_template("update.html", book=book)
+    return render_template("update.html", book=book, page_title="Update")
 
 
 @app.route('/updatetitle', methods=["POST"])
 def updatetitle():
     try:
-        new_title = request.form.get("new_title") #First we request the new title.
-        old_title = request.form.get("old_title") #Then we look for the old title.
-        book = models.Books.query.filter_by(title=old_title).first() #Finds the first title that matches the old title.
-        book.title = new_title #Replace that book's old title with the new title.
+        newtitle = request.form.get("newtitle") #First we request the new title.
+        oldtitle = request.form.get("oldtitle") #Then we look for the old title.
+        book = models.Books.query.filter_by(title=oldtitle).first() #Finds the first title that matches the old title.
+        book.title = newtitle #Replace that book's old title with the new title.
         db.session.commit() #Commit to the DB.
     except Exception as e:
         print("Could not update title")
@@ -97,21 +96,19 @@ def addbook():
             new_book = models.Books()
             author = models.Authors()
             genre = models.Genres()
-            user = models.Users.query.filter_by(userid=session['user']).first_or_404()
             new_book.title = request.form.get("title")
             new_book.sypnosis = request.form.get("sypnosis")   
             new_book.year = request.form.get("year")
             author.name = request.form.get('author')        
-            genre.name = request.form.get('genre')        
+            genre.name = request.form.get('genre')      
             new_book.authors.append(author)        
             new_book.genres.append(genre)
-            new_book.user.append(user)
             db.session.add(new_book)
             db.session.commit()
         except Exception as e:
-            print("Could not update title")
+            print("Could not add book")
             print(e)  
-    return redirect("/", user=user)
+    return redirect("/")
 
 
 def current_user(): # current user function
@@ -140,7 +137,7 @@ def login():
 
         else:
             return render_template('login.html', error='Username either exceeds limit of 20 characters or does not exist')
-    return render_template("login.html") # the html template for this is login.html
+    return render_template("login.html", page_title="Login") # the html template for this is login.html
 
 
 @app.route('/logout') # /logout page
@@ -168,7 +165,7 @@ def signup(): # create user function
             db.session.add(user_info) # adds the data to the database
             db.session.commit() # commits the add
             flash("You have succesfully registed an Aurora account.") # tells the user they have succesfully logged in.
-    return render_template('signup.html')
+    return render_template('signup.html', page_title="Signup")
 
 
 if __name__ == "__main__":
