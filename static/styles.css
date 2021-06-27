@@ -30,6 +30,10 @@
     --font-nav: "Julius Sans One";
     }
 
+html{
+    height: 100%;
+}
+
 body {
     font-family: var(--font-body);
     color: var(--text-color) ;
@@ -37,6 +41,7 @@ body {
     background-color: var(--bg-color);
     padding: 30px;
     text-align: center;
+    min-height: 100%;
 }
 
 h1 {
@@ -212,4 +217,14 @@ a:link {
 
 .button[value=Delete]:hover{
     background-color: red; 
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-align: center;
 }
