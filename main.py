@@ -71,7 +71,7 @@ def updatetitle():
     try:
         newtitle = request.form.get("newtitle") #First we request the new title.
         oldtitle = request.form.get("oldtitle") #Then we look for the old title.
-        book = models.Books.query.filter_by(title=oldtitle).first() #Finds the first title that matches the old title.
+        book = models.Books.query.filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
         book.title = newtitle #Replace that book's old title with the new title.
         db.session.commit() #Commit to the DB.
     except Exception as e:

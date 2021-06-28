@@ -18,22 +18,22 @@
         <th colspan = 1>Author</th>            
         <th colspan = 1>Genre</th>
         <th colspan = 2>Year</th>
-    </tr>
+    </tr>     
 {% for book in book %}
     <tr> 
-        <td> <a href="/book/{{ book.title }}"> {{ book.title }} </a></td>
+        <td> <a href="/book/{{ book.title }}">{{ book.title }}</a></td>
         <td>
-          <form method="POST" action="./updatetitle" style="display: inline" autocomplete="off">
+          <form method="POST" action='./updatetitle' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{ book.title }}" name="oldtitle">
             <input type="text" value="{{ book.title }}" name="newtitle">
             <input type="submit" class="button" value="Update">
           </form>
         </td>
         <td> <a href="/author/{{ book.authors|map(attribute='name')|join(', ') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
-        <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}"> {{ book.genres|map(attribute="name")|join(", ") }}</a></td>
+        <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
         <td>{{ book.year }}</td>           
         <td>
-          <form method="POST" action="./delete" style="display: inline">
+          <form method="POST" action="/delete" style="display: inline">
             <input type="hidden" value="{{book.title}}" name="title">
             <input type="submit" class="button" value="Delete">
           </form>

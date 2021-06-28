@@ -3,12 +3,12 @@
         <li><a href="/"><i class="fa fa-fw fa-home"></i>Home</a></li>
         {% if current_user %}
         <li><a href="/journal"><i class="fa fa-fw fa-book"></i>Journal</a></li>
-        <li><a href="/update"><i class="fa fa-fw fa-pencil"></i>Update</a></li>                
+        <li><a href="/update"><i class="fa fa-fw fa-edit"></i>Update</a></li>                
         {% else %}
         <li><a href="/"><i class="fa fa-fw fa-lock"></i>Journal</a></li>
         <li><a href="/"><i class="fa fa-fw fa-lock"></i>Update</a></li>       
-        {% endif %}            
-        <li><a href="https://github.com/StephenHuang17253/aurora"><i class="fa fa-fw fa-github"></i>Repository</a></li>      
+        {% endif %}
+        <li><a href="/books"><i class="fa fa-fw fa-folder-open"></i>Database</a></li>        
         {% if current_user %}
         <li><a href="/logout"><i class="fa fa-fw fa-user-o"></i>Logout</a></li>
         <li><a><i class="fa fa-fw fa-user-circle"></i>Logged in as {{current_user.username}}</a></li>            
