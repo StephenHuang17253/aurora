@@ -62,8 +62,8 @@ def genre(name):
 
 @app.route('/update', methods=["GET", "POST"])
 def update():
-    book = models.Books.query.all()
-    return render_template("update.html", book=book, page_title="Update")
+    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
+    return render_template("update.html", user=user, userid=user, page_title="Journal")
 
 
 @app.route('/updatetitle', methods=["POST"])

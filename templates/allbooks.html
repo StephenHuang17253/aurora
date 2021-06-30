@@ -2,7 +2,9 @@
 {% block content %}
 
 {% if current_user %}
-<h1>Hey {{current_user.username}}, these are all the books in the database.</h1>
+<h1>Hey {{current_user.username}}, these that've been read by Aurora users.</h1>
+{% else %}
+<h1>These are all the books that've been read by Aurora users.</h1>
 {% endif %}
 
 <table id="books"> 

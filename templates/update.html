@@ -19,13 +19,13 @@
         <th colspan = 1>Genre</th>
         <th colspan = 2>Year</th>
     </tr>     
-{% for book in book %}
+{% for book in user.books %}
     <tr> 
-        <td> <a href="/book/{{ book.title }}">{{ book.title }}</a></td>
+        <td> <a href="/book/{{book.title}}">{{ book.title }}</a></td>
         <td>
           <form method="POST" action='./updatetitle' style="display: inline" autocomplete="off">
-            <input type="hidden" value="{{ book.title }}" name="oldtitle">
-            <input type="text" value="{{ book.title }}" name="newtitle">
+            <input type="hidden" value="{{book.title}}" name="oldtitle">
+            <input type="text" value="{{book.title}}" name="newtitle">
             <input type="submit" class="button" value="Update">
           </form>
         </td>
