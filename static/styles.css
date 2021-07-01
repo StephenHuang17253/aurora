@@ -184,23 +184,23 @@ a:link {
     cursor: pointer;
   }
   
-  a:visited {
+a:visited {
     color: var(--text-color);
     background-color: transparent;
     text-decoration: none;
-  }
-  
-  a:hover {
+}
+
+a:hover {
     color: var(--text-color);
     background-color: transparent;
     text-decoration: underline;
-  }
-  
-  a:active {
+}
+
+a:active {
     color: var(--text-color);
     background-color: transparent;
     text-decoration: underline;
-  }
+}
 
 .button {
     transition-duration: 0.25  s;

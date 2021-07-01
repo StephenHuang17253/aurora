@@ -16,31 +16,30 @@ from config import Config
 
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = "sqlite:///{}".format(os.path.join(project_dir, "journal.db"))
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 
+
 import models
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def home():
     return render_template("home.html", page_title="Home")
 
 
-@app.route('/journal', methods=["GET", "POST"])
+@app.route('/journal')
 def journal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
-@app.route('/books', methods=["GET", "POST"])
+@app.route('/books')
 def books():
     book = models.Books.query.all()
     return render_template("allbooks.html", book=book, page_title="Books")
-
 
 @app.route('/book/<title>')
 def book(title):
@@ -71,8 +70,11 @@ def updatetitle():
     try:
         newtitle = request.form.get("newtitle") #First we request the new title.
         oldtitle = request.form.get("oldtitle") #Then we look for the old title.
-        book = models.Books.query.filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
-        book.title = newtitle #Replace that book's old title with the new title.
+        book = db.session.query(models.Books).filter_by(title=oldtitle).first_or_404()
+        book.title = newtitle
+        # book = models.Books.query.filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
+        # book.title = newtitle
+        # db.session.merge(book)
         db.session.commit() #Commit to the DB.
     except Exception as e:
         print("Could not update title")
@@ -83,10 +85,14 @@ def updatetitle():
 @app.route("/delete", methods=["POST"])
 def delete():
     title = request.form.get("title")
-    book = models.Books.query.filter_by(title=title).first()
+    book = (models.Books.query.filter_by(title=title).first())
+    book = db.session.merge(book)
+    # book = db.session.query(models.Books).filter_by(title=title).first()
+    # db.session.merge(book)
     db.session.delete(book)
     db.session.commit()
-    return redirect("/journal")
+    return '/'
+    # return redirect("/journal")
 
 
 @app.route('/addbook', methods=["GET", "POST"])
