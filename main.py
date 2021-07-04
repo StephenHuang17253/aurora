@@ -62,7 +62,7 @@ def genre(name):
 @app.route('/update', methods=["GET", "POST"])
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
-    return render_template("update.html", user=user, userid=user, page_title="Journal")
+    return render_template("update.html", user=user, userid=user, page_title="Update")
 
 
 @app.route('/updatetitle', methods=["POST"])
@@ -70,12 +70,12 @@ def updatetitle():
     try:
         newtitle = request.form.get("newtitle") #First we request the new title.
         oldtitle = request.form.get("oldtitle") #Then we look for the old title.
-        book = db.session.query(models.Books).filter_by(title=oldtitle).first_or_404()
+        book = db.session.query(models.Books).filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
         book.title = newtitle
-        # book = models.Books.query.filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
+        # book = models.Books.query.filter_by(title=oldtitle).first_or_404() 
         # book.title = newtitle
         # db.session.merge(book)
-        db.session.commit() #Commit to the DB.
+        db.session.commit()
     except Exception as e:
         print("Could not update title")
         print(e)
@@ -85,7 +85,7 @@ def updatetitle():
 @app.route("/delete", methods=["POST"])
 def delete():
     title = request.form.get("title")
-    book = (models.Books.query.filter_by(title=title).first())
+    book = models.Books.query.filter_by(title=title).first()
     book = db.session.merge(book)
     # book = db.session.query(models.Books).filter_by(title=title).first()
     # db.session.merge(book)
