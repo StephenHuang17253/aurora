@@ -24,6 +24,8 @@
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
+    --button-color-green: #2E8B57;
+    --button-color-red: #B22222;
     --font-aurora: "Montserrat";
     --font-header: "Montserrat";
     --font-body: "Lato";
@@ -50,6 +52,17 @@ h1 {
     padding: 10px;
 }
 
+h2 {
+    font-family: var(--font-header);
+    color:  var(--main-color) ;
+    padding: 10px;
+}
+
+h3 {
+    font-family: var(--font-header);
+    color:  var(--main-color) ;
+    padding: 10px;
+}
 
 header {
     font-family: var(--font-aurora);
@@ -117,6 +130,8 @@ input {
     box-sizing: border-box;
     margin: auto;
     width: 290px;
+    border-radius: 15px;
+    margin-top: 5px;
 }
 input:focus {
     background-color: var(--main-color);
@@ -124,7 +139,7 @@ input:focus {
 }
 
 input[type=submit]:hover {
-    background-color: var(--sub-color);
+    background-color: var(--button-color-green);
 }
 
 input[type=submit] {
@@ -154,10 +169,6 @@ table {
 
 th, td {
     text-align: left;
-    padding: 10px;
-}
-
-p {
     padding: 10px;
 }
 
@@ -205,21 +216,24 @@ a:active {
 .button {
     transition-duration: 0.25  s;
     cursor: pointer;
+    border-radius: 15px;
+    margin-top: 5px;
 }
 
 .button[value='Add book']:hover{
-    background-color: #2E8B57;
+    background-color: var(--button-color-green);
 }
 
 .button[value=Update]:hover{
-    background-color: #2E8B57; 
+    background-color: var(--button-color-green); 
 }
 
 .button[value=Delete]:hover{
-    background-color: #B22222; 
+    background-color: var(--button-color-red); 
 }
 
 footer {
+    padding-top: 20px;
     left: 0;
     bottom: 0;
     width: 100%;

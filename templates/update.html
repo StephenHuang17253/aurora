@@ -15,7 +15,7 @@
 <table id="editjournal"> 
     <tr>
         <th colspan = 2>Title</th>
-        <th colspan = 1>Author</th>            
+        <th colspan = 2>Author</th>            
         <th colspan = 1>Genre</th>
         <th colspan = 2>Year</th>
     </tr>     
@@ -26,12 +26,20 @@
           <form method="POST" action='/updatetitle' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="oldtitle">
             <input type="text" value="{{book.title}}" name="newtitle">
+            <input type="submit" class="button" value="Update">          
+          </form>
+       </td>
+        <td> <a href="/author/{{ book.authors|join(', ', attribute='name') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
+        <td>
+          <form method="POST" action='/updateauthor' style="display: inline" autocomplete="off">
+            <input type="hidden" value="{{ book.authors|join(', ', attribute='name') }}" name="oldauthor">
+            <input type="text" value="{{ book.authors|join(', ', attribute='name') }}" name="newauthor">
             <input type="submit" class="button" value="Update">
           </form>
         </td>
-        <td> <a href="/author/{{ book.authors|map(attribute='name')|join(', ') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
-        <td> <a href="/genre/{{ book.genres|map(attribute='name')|join(', ') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-        <td>{{ book.year }}</td>           
+        <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
+        <td>{{ book.year }}</td>          
+
         <td>
           <form method="POST" action="/delete" style="display: inline">
             <input type="hidden" value="{{book.title}}" name="title">

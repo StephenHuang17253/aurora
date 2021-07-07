@@ -20,7 +20,7 @@ class Books (db.Model):
     __tablename__ = "Books"
     bookid = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80)) 
-    sypnosis = db.Column(db.String(80)) 
+    synopsis = db.Column(db.String(80)) 
     year = db.Column(db.String(80)) 
     
     authors = db.relationship("Authors", secondary=BooksAuthors, back_populates="books")

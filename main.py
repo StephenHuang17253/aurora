@@ -82,6 +82,20 @@ def updatetitle():
     return redirect("/journal")
 
 
+@app.route('/updateauthor', methods=["POST"])
+def updateauthor():
+    try:
+        newauthor = request.form.get("newauthor") #First we request the new author.
+        oldauthor = request.form.get("oldauthor") #Then we look for the old author.
+        author = db.session.query(models.Books).filter_by(authors=oldauthor).first_or_404() #Finds the first author that matches the old author.
+        author.name = newauthor
+        db.session.commit()
+    except Exception as e:
+        print("Could not update author")
+        print(e)
+    return redirect("/journal")
+
+
 @app.route("/delete", methods=["POST"])
 def delete():
     title = request.form.get("title")
