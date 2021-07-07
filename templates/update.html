@@ -5,9 +5,16 @@
 <form method="POST" action="/addbook" autocomplete="off">
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
-    <input type="text" id="sypnosis" name="sypnosis" placeholder="Sypnosis here...">    
-    <input type="text" id="genre" name="genre" placeholder="Genre name here...">
-    <input type="text" id="author" name="author" placeholder="Author name here...">
+    <input type="text" id="sypnopsis" name="synopsis" placeholder="Sypnosis here...">    
+    <input list="genres" placeholder="Genre here...">
+    <datalist id="genres" >
+      <option value="Science Fiction">Science Fiction</option>
+      <option value="Fantasy">Fantasy</option>
+    </datalist>
+    <select name="author" id="author">
+      <option selected disabled value="Genre">Select author...</option>
+      <option value="Brendan Choi">Brendan Choi</option>
+    </select>
     <input type="submit" class="button" value="Add book">
   </form>
 
@@ -31,10 +38,20 @@
        </td>
         <td> <a href="/author/{{ book.authors|join(', ', attribute='name') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
         <td>
-          <form method="POST" action='/updateauthor' style="display: inline" autocomplete="off">
-            <input type="hidden" value="{{ book.authors|join(', ', attribute='name') }}" name="oldauthor">
-            <input type="text" value="{{ book.authors|join(', ', attribute='name') }}" name="newauthor">
-            <input type="submit" class="button" value="Update">
+          <form method="POST" action='/updateauthor/{{ book.bookid }}' style="display: inline" autocomplete="off">
+            <!-- <input type="hidden" value="{{ book.authors|join(', ', attribute='name') }}" name="oldauthor"> -->
+            <!-- <input type="text" value="{{ book.authors|join(', ', attribute='name') }}" name="newauthor"> -->
+            <datalist id="author-list">
+              {% for author in author_list %}
+                <option value="{{ author.name }}">{{ author.name }}</option>
+              {% endfor %}
+            </datalist>
+            <div class="authors">
+              {% for author in book.authors %}
+                <input list="author-list" name="author" value="{{ author.name }}" />
+              {% endfor %}
+            </div>
+            <div><input type="button" class="button add-author" value="Add"><input type="submit" class="button update" value="Update"></div>
           </form>
         </td>
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
@@ -49,6 +66,19 @@
     </tr>
 {% endfor %}
 </table>
+<script>
+  function addAuthor (event) {
+    // find the authors div
+    const authors = event.target.parentElement.parentElement.querySelector('.authors');
+    // add a new input to the element
+    // authors.innerHTML = authors.innerHTML + '<input list="author-list" name="author" />';
+    authors.insertAdjacentHTML('beforeend', '<input list="author-list" name="author" />')
+  }
+
+  document.querySelectorAll('.button.add-author').forEach(function (button) {
+    button.addEventListener('click', addAuthor);
+  })
+</script>
 
 {% endblock %}   
 

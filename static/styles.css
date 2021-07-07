@@ -120,6 +120,7 @@ li:last-child {
     float: right;
 }
 
+
 input {
     padding: 8px 10px;
     box-sizing: border-box;
@@ -133,6 +134,21 @@ input {
     border-radius: 15px;
     margin-top: 5px;
 }
+
+select {
+    padding: 8px 10px;
+    box-sizing: border-box;
+    background-color: var(--text-color);
+    border: var(--bg-color);
+    color: var(--bg-color);
+    display: block;
+    box-sizing: border-box;
+    margin: auto;
+    width: 290px;
+    border-radius: 15px;
+    margin-top: 5px;
+}
+
 input:focus {
     background-color: var(--main-color);
     outline: none;
@@ -143,20 +159,6 @@ input[type=submit]:hover {
 }
 
 input[type=submit] {
-    width: 290px;
-}
-
-
-select {
-    padding: 8px 10px;
-    box-sizing: border-box;
-    background-color: var(--text-color);
-    border-radius: 2px;
-    border: var(--bg-color);
-    color: var(--bg-color);
-    display: block;
-    box-sizing: border-box;
-    margin: auto;
     width: 290px;
 }
 
@@ -242,4 +244,3 @@ footer {
     text-align: center;
     font-family: var(--font-nav);
 }
-

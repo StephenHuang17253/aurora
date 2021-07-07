@@ -62,7 +62,8 @@ def genre(name):
 @app.route('/update', methods=["GET", "POST"])
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
-    return render_template("update.html", user=user, userid=user, page_title="Update")
+    author_list = models.Authors.query.all()
+    return render_template("update.html", user=user, author_list=author_list, userid=user, page_title="Update")
 
 
 @app.route('/updatetitle', methods=["POST"])
@@ -82,14 +83,28 @@ def updatetitle():
     return redirect("/journal")
 
 
-@app.route('/updateauthor', methods=["POST"])
-def updateauthor():
+@app.route('/updateauthor/<int:book_id>', methods=["POST"])
+def updateauthor(book_id):
     try:
-        newauthor = request.form.get("newauthor") #First we request the new author.
-        oldauthor = request.form.get("oldauthor") #Then we look for the old author.
-        author = db.session.query(models.Books).filter_by(authors=oldauthor).first_or_404() #Finds the first author that matches the old author.
-        author.name = newauthor
+        authors = request.form.getlist('author')
+        author_models = []
+        for author_name in authors:
+            if author_name.strip() == '':
+                continue
+            author = models.Authors.query.filter_by(name=author_name).first()
+            if author is None:
+                author = models.Authors(name=author)
+                db.session.add(author)
+            author_models.append(db.session.merge(author))
+        print(authors)
+        book = models.Books.query.get(book_id)
+        book = db.session.merge(book)
+        book.authors = author_models
         db.session.commit()
+        # print(newauthor, oldauthor)
+        # author = db.session.query(models.Books).filter_by(authors=oldauthor).first_or_404() #Finds the first author that matches the old author.
+        # author.name = newauthor
+        # db.session.commit()
     except Exception as e:
         print("Could not update author")
         print(e)
@@ -117,7 +132,7 @@ def addbook():
             author = models.Authors()
             genre = models.Genres()
             new_book.title = request.form.get("title")
-            new_book.sypnosis = request.form.get("sypnosis")   
+            new_book.synopsis = request.form.get("synopsis")   
             new_book.year = request.form.get("year")
             author.name = request.form.get('author')        
             genre.name = request.form.get('genre')      
