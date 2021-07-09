@@ -120,8 +120,7 @@ def delete():
     # db.session.merge(book)
     db.session.delete(book)
     db.session.commit()
-    return '/'
-    # return redirect("/journal")
+    return redirect("/journal")
 
 
 @app.route('/addbook', methods=["GET", "POST"])
