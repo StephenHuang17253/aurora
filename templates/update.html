@@ -6,15 +6,17 @@
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
     <input type="text" id="sypnopsis" name="synopsis" placeholder="Sypnosis here...">    
-    <input list="genres" placeholder="Genre here...">
+    <input list="genres" name="genres" placeholder="Genre here...">
     <datalist id="genres" >
       <option value="Science Fiction">Science Fiction</option>
       <option value="Fantasy">Fantasy</option>
     </datalist>
-    <select name="author" id="author">
-      <option selected disabled value="Genre">Select author...</option>
-      <option value="Brendan Choi">Brendan Choi</option>
-    </select>
+    <input list="author" name="author" placeholder="Author here...">
+    <datalist id="author" >
+    {% for author in author_list %}
+      <option value="{{ author.name }}">{{ author.name }}</option>
+    {% endfor %}
+    </datalist>
     <input type="submit" class="button" value="Add book">
   </form>
 
