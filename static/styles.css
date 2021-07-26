@@ -226,7 +226,7 @@ a:active {
     background-color: var(--button-color-green);
 }
 
-.button[value=Update]:hover{
+.button[value="Add another author"]:hover{
     background-color: var(--button-color-green); 
 }
 

@@ -20,6 +20,18 @@
     <input type="submit" class="button" value="Add book">
   </form>
 
+<h1>Select book from database to add to Journal</h1>
+<form method="POST" action="/selectbook" autocomplete="off">
+  <input list="book" name="book" placeholder="Start typing a title...">
+  <datalist id="book">
+  {% for book in book %}
+    <option value="{{book.title}}">{{book.title}}</option>
+  {% endfor %}
+  </datalist>
+  <input type="submit" class="button" value="Add book">
+</form>
+
+
 <br><h1>Make changes to your journal</h1>
 <table id="editjournal"> 
     <tr>
@@ -53,7 +65,7 @@
                 <input list="author-list" name="author" value="{{ author.name }}" />
               {% endfor %}
             </div>
-            <div><input type="button" class="button add-author" value="Add"><input type="submit" class="button update" value="Update"></div>
+            <div><input type="button" class="button add-author" value="Add another author"><input type="submit" class="button update" value="Update"></div>
           </form>
         </td>
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>

@@ -41,6 +41,7 @@ def books():
     book = models.Books.query.all()
     return render_template("allbooks.html", book=book, page_title="Books")
 
+
 @app.route('/book/<title>')
 def book(title):
     book = models.Books.query.filter_by(title=title).first_or_404()
@@ -63,7 +64,8 @@ def genre(name):
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     author_list = models.Authors.query.all()
-    return render_template("update.html", user=user, author_list=author_list, userid=user, page_title="Update")
+    book = models.Books.query.all()
+    return render_template("update.html", user=user, author_list=author_list, userid=user, book=book, page_title="Update")
 
 
 @app.route('/updatetitle', methods=["POST"])
@@ -109,6 +111,23 @@ def updateauthor(book_id):
         print("Could not update author")
         print(e)
     return redirect("/journal")
+
+
+@app.route('/selectbook', methods=["GET", "POST"])
+def selectbook():
+    if request.form:
+        try:
+            selected_book = models.Books()
+            selected_book.title = models.Books.query.filter_by(title=request.form.get("book"))
+            user = models.Users()
+            user.userid = models.Users.query.filter_by(userid=session['user']).first_or_404()
+            selected_book.users.append(user)
+            db.session.merge(selected_book)
+            db.session.commit()
+        except Exception as e:
+            print("Could not add book")
+            print(e)  
+    return redirect("/")
 
 
 @app.route("/delete", methods=["POST"])
