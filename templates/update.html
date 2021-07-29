@@ -1,26 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h1>Add new book</h1>
-<form method="POST" action="/addbook" autocomplete="off">
-    <input type="text" id="title" name="title" placeholder="Title here...">
-    <input type="text" id="year" name="year" placeholder="Year of release here...">
-    <input type="text" id="sypnopsis" name="synopsis" placeholder="Sypnosis here...">    
-    <input list="genres" name="genres" placeholder="Genre here...">
-    <datalist id="genres" >
-      <option value="Science Fiction">Science Fiction</option>
-      <option value="Fantasy">Fantasy</option>
-    </datalist>
-    <input list="author" name="author" placeholder="Author here...">
-    <datalist id="author" >
-    {% for author in author_list %}
-      <option value="{{ author.name }}">{{ author.name }}</option>
-    {% endfor %}
-    </datalist>
-    <input type="submit" class="button" value="Add book">
-  </form>
-
-<h1>Select book from database to add to Journal</h1>
+<h1>Update your journal through this page</h1>
 <form method="POST" action="/selectbook" autocomplete="off">
   <input list="book" name="book" placeholder="Start typing a title...">
   <datalist id="book">
@@ -30,6 +11,28 @@
   </datalist>
   <input type="submit" class="button" value="Add book">
 </form>
+<h2>Didn't find what you were looking for?</h2>
+<h1>Add it here!</h1>
+<form method="POST" action="/addbook" autocomplete="off">
+    <input type="text" id="title" name="title" placeholder="Title here...">
+    <input type="text" id="year" name="year" placeholder="Year of release here...">
+    <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here... (Optional)">    
+    <input list="genres" name="genres" placeholder="Start typing and authors will appear...">
+    <datalist id="genres" >
+    {% for genre in genre_list %}
+      <option value="{{ genre.name }}">{{ genre.name }}</option>
+    {% endfor %}
+    </datalist>
+    <input list="author" name="author" placeholder="Start typing and authors will appear...">
+    <datalist id="author" >
+    {% for author in author_list %}
+      <option value="{{ author.name }}">{{ author.name }}</option>
+    {% endfor %}
+    </datalist>
+    <input type="submit" class="button" value="Add book">
+  </form>
+
+
 
 
 <br><h1>Make changes to your journal</h1>
@@ -53,8 +56,6 @@
         <td> <a href="/author/{{ book.authors|join(', ', attribute='name') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
         <td>
           <form method="POST" action='/updateauthor/{{ book.bookid }}' style="display: inline" autocomplete="off">
-            <!-- <input type="hidden" value="{{ book.authors|join(', ', attribute='name') }}" name="oldauthor"> -->
-            <!-- <input type="text" value="{{ book.authors|join(', ', attribute='name') }}" name="newauthor"> -->
             <datalist id="author-list">
               {% for author in author_list %}
                 <option value="{{ author.name }}">{{ author.name }}</option>

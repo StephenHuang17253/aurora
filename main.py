@@ -64,8 +64,9 @@ def genre(name):
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
     author_list = models.Authors.query.all()
+    genre_list = models.Genres.query.all()
     book = models.Books.query.all()
-    return render_template("update.html", user=user, author_list=author_list, userid=user, book=book, page_title="Update")
+    return render_template("update.html", user=user, genre_list=genre_list, author_list=author_list, userid=user, book=book, page_title="Update")
 
 
 @app.route('/updatetitle', methods=["POST"])
@@ -103,10 +104,6 @@ def updateauthor(book_id):
         book = db.session.merge(book)
         book.authors = author_models
         db.session.commit()
-        # print(newauthor, oldauthor)
-        # author = db.session.query(models.Books).filter_by(authors=oldauthor).first_or_404() #Finds the first author that matches the old author.
-        # author.name = newauthor
-        # db.session.commit()
     except Exception as e:
         print("Could not update author")
         print(e)
@@ -117,12 +114,36 @@ def updateauthor(book_id):
 def selectbook():
     if request.form:
         try:
-            selected_book = models.Books()
-            selected_book.title = models.Books.query.filter_by(title=request.form.get("book"))
-            user = models.Users()
-            user.userid = models.Users.query.filter_by(userid=session['user']).first_or_404()
+            book = request.form.get("book")
+            selected_book = db.session.query(models.Books).filter_by(title=book).first_or_404()
+            user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
             selected_book.users.append(user)
-            db.session.merge(selected_book)
+            db.session.add(selected_book)
+            db.session.commit()
+        except Exception as e:
+            print("Could not add book")
+            print(e)  
+    return redirect("/")
+
+
+@app.route('/addbook', methods=["GET", "POST"])
+def addbook():
+    if request.form:
+        try:
+            new_book = models.Books()
+            author = models.Authors()
+            genre = models.Genres()
+            new_book.title = request.form.get("title")
+            new_book.synopsis = request.form.get("synopsis")   
+            new_book.year = request.form.get("year")
+            author.name = request.form.get('author')        
+            genre.name = request.form.get('genres')      
+            user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
+
+            db.session.add(new_book)
+            new_book.users.append(user)
+            new_book.authors.append(author)        
+            new_book.genres.append(genre)            
             db.session.commit()
         except Exception as e:
             print("Could not add book")
@@ -138,28 +159,6 @@ def delete():
     db.session.delete(book)
     db.session.commit()
     return redirect("/journal")
-
-
-@app.route('/addbook', methods=["GET", "POST"])
-def addbook():
-    if request.form:
-        try:
-            new_book = models.Books()
-            author = models.Authors()
-            genre = models.Genres()
-            new_book.title = request.form.get("title")
-            new_book.synopsis = request.form.get("synopsis")   
-            new_book.year = request.form.get("year")
-            author.name = request.form.get('author')        
-            genre.name = request.form.get('genres')      
-            new_book.authors.append(author)        
-            new_book.genres.append(genre)
-            db.session.add(new_book)
-            db.session.commit()
-        except Exception as e:
-            print("Could not add book")
-            print(e)  
-    return redirect("/")
 
 
 def current_user(): # current user function
