@@ -139,7 +139,6 @@ def addbook():
             author.name = request.form.get('author')        
             genre.name = request.form.get('genres')      
             user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
-
             db.session.add(new_book)
             new_book.users.append(user)
             new_book.authors.append(author)        

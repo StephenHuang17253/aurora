@@ -17,7 +17,7 @@
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
     <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here... (Optional)">    
-    <input list="genres" name="genres" placeholder="Start typing and authors will appear...">
+    <input list="genres" name="genres" placeholder="Start typing and genres will appear...">
     <datalist id="genres" >
     {% for genre in genre_list %}
       <option value="{{ genre.name }}">{{ genre.name }}</option>
