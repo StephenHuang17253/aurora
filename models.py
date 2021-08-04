@@ -23,7 +23,7 @@ class Books (db.Model):
     synopsis = db.Column(db.String(80)) 
     year = db.Column(db.String(80)) 
     
-    authors = db.relationship("Authors", secondary=BooksAuthors, back_populates="books")
+    authors = db.relationship("Authors", secondary=BooksAuthors, back_populates="books" )
     users = db.relationship("Users", secondary=BooksUsers, back_populates="books")  
     genres = db.relationship("Genres", secondary=BooksGenres, back_populates="books")
 

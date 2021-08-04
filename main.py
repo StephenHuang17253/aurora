@@ -129,32 +129,42 @@ def selectbook():
 @app.route('/addbook', methods=["GET", "POST"])
 def addbook():
     if request.form:
-        try:
-            new_book = models.Books()
-            author = models.Authors()
-            genre = models.Genres()
-            new_book.title = request.form.get("title")
-            new_book.synopsis = request.form.get("synopsis")   
-            new_book.year = request.form.get("year")
-            author.name = request.form.get('author')        
-            genre.name = request.form.get('genres')      
-            user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
-            db.session.add(new_book)
-            new_book.users.append(user)
-            new_book.authors.append(author)        
-            new_book.genres.append(genre)            
-            db.session.commit()
-        except Exception as e:
-            print("Could not add book")
-            print(e)  
+        # try:
+        new_book = models.Books()
+        new_book.title = request.form.get("title")
+        new_book.synopsis = request.form.get("synopsis")   
+        new_book.year = request.form.get("year")
+        genre = models.Genres()
+        genre_name = request.form.get('genres')
+        genre = db.session.query(models.Genres).filter_by(name=genre_name).first()
+        if genre is None:
+            genre = models.Genres(name=genre_name)
+        author_name = request.form.get('author')
+        author = db.session.query(models.Authors).filter_by(name=author_name).first()
+        if author is None:
+            author = models.Authors(name=author_name)
+        user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
+        db.session.add(new_book)             
+        db.session.commit()
+        new_book.users.append(user)
+        new_book.authors.append(author)        
+        new_book.genres.append(genre)  
+        db.session.commit()          
+        # except Exception as e:
+        #     print("Could not add book")
+        #     print(e)  
     return redirect("/")
+
+   
 
 
 @app.route("/delete", methods=["POST"])
 def delete():
+    #user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404() 
     title = request.form.get("title")
-    book = models.Books.query.filter_by(title=title).first()
-    book = db.session.merge(book)
+    book = db.session.query(models.Books).filter_by(title=title).first()
+    #05/08 update, currently thinking of trying to only delete the book from a specific user's journal
+    #rather than delete it entirely from the database. I might retain the original delete for use by an admin account only.
     db.session.delete(book)
     db.session.commit()
     return redirect("/journal")

@@ -125,7 +125,7 @@ input {
     padding: 8px 10px;
     box-sizing: border-box;
     background-color: var(--text-color);
-    border: var(--bg-color);
+    border: 2px var(--sub-color);
     color: var(--bg-color);
     display: block;
     box-sizing: border-box;
@@ -152,6 +152,9 @@ select {
 input:focus {
     background-color: var(--main-color);
     outline: none;
+    border: 4px var(--sub-color);
+    border-color: 4px var(--sub-color);
+
 }
 
 input[type=submit]:hover {
