@@ -41,7 +41,9 @@
         <th colspan = 2>Title</th>
         <th colspan = 2>Author</th>            
         <th colspan = 1>Genre</th>
-        <th colspan = 2>Year</th>
+        <th colspan = 1>Year</th>
+        <th colspan = 1>Book Cover</th>
+        <th colspan = 1>Delete Book</th>
     </tr>     
 {% for book in user.books %}
     <tr> 
@@ -70,8 +72,14 @@
           </form>
         </td>
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-        <td>{{ book.year }}</td>          
-
+        <td>{{ book.year }}</td>      
+        <td>
+          <form action="/upload">
+            <label for='bookcover'>Upload a book cover</label>
+            <input type="file" id="bookcover" name="bookcover">
+            <input type="submit">
+          </form>  
+        </td>              
         <td>
           <form method="POST" action="/delete" style="display: inline">
             <input type="hidden" value="{{book.title}}" name="title">

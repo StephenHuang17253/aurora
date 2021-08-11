@@ -23,6 +23,7 @@ db = SQLAlchemy(app)
 
 
 import models
+import forms
 
 
 @app.route('/')
@@ -32,19 +33,19 @@ def home():
 
 @app.route('/journal')
 def journal():
-    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
+    user = models.Users.query.filter_by(userid=session['user']).first_or_404() #Checks the database of users for the currently logged in user
     return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
 @app.route('/books')
 def books():
-    book = models.Books.query.all()
+    book = models.Books.query.all() #All books
     return render_template("allbooks.html", book=book, page_title="Books")
 
-
+#The code that allows users to click on book in the table and be taken to a page specifically about that book.
 @app.route('/book/<title>')
 def book(title):
-    book = models.Books.query.filter_by(title=title).first_or_404()
+    book = models.Books.query.filter_by(title=title).first_or_404() 
     return render_template('book.html', book=book, page_title=title)
 
 
@@ -75,10 +76,7 @@ def updatetitle():
         newtitle = request.form.get("newtitle") #First we request the new title.
         oldtitle = request.form.get("oldtitle") #Then we look for the old title.
         book = db.session.query(models.Books).filter_by(title=oldtitle).first_or_404() #Finds the first book title that matches the old title.
-        book.title = newtitle
-        # book = models.Books.query.filter_by(title=oldtitle).first_or_404() 
-        # book.title = newtitle
-        # db.session.merge(book)
+        book.title = newtitle #Sets the title of the book to the new title.
         db.session.commit()
     except Exception as e:
         print("Could not update title")
@@ -110,6 +108,12 @@ def updateauthor(book_id):
     return redirect("/journal")
 
 
+@app.route('/upload', methods=["GET", "POST"])
+def upload():
+    return redirect("/")
+
+
+
 @app.route('/selectbook', methods=["GET", "POST"])
 def selectbook():
     if request.form:
@@ -129,7 +133,6 @@ def selectbook():
 @app.route('/addbook', methods=["GET", "POST"])
 def addbook():
     if request.form:
-        # try:
         new_book = models.Books()
         new_book.title = request.form.get("title")
         new_book.synopsis = request.form.get("synopsis")   
@@ -150,13 +153,8 @@ def addbook():
         new_book.authors.append(author)        
         new_book.genres.append(genre)  
         db.session.commit()          
-        # except Exception as e:
-        #     print("Could not add book")
-        #     print(e)  
     return redirect("/")
-
    
-
 
 @app.route("/delete", methods=["POST"])
 def delete():
@@ -169,8 +167,8 @@ def delete():
     db.session.commit()
     return redirect("/journal")
 
-
-def current_user(): # current user function
+#This function gets the current user
+def current_user(): 
     if session.get("user"): # if it is able to get a session for user
         return models.Users.query.get(session["user"]) # return the user info
     else:
@@ -184,7 +182,7 @@ def add_current_user():
     return dict(current_user=None) # otherwise current user is none
 
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/login', methods=["GET", "POST"]) # /Login page
 def login():
     if session.get("user"): # 
         return redirect('/') # redirects to home page
@@ -210,7 +208,7 @@ def logout(): # logout function
 
 
 @app.route('/signup', methods=["GET","POST"])
-def signup(): # create user function
+def signup(): # create account / register function
     if request.method == "POST":
         if len(request.form.get('username')) > 20: # if the inputted username is greater than 20 characters it will not be accepted
             return render_template('signup.html', error='Username exceeds limit of 20 characters') # prompts the user to create a shorter username
