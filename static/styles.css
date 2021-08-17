@@ -156,6 +156,10 @@ input[type=submit]:hover {
     background-color: var(--button-color-green);
 }
 
+input[type=file]:hover {
+    background-color: var(--button-color-green);
+}
+
 input[type=submit] {
     width: 290px;
 }

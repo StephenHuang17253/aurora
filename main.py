@@ -31,6 +31,7 @@ def home():
     return render_template("home.html", page_title="Home")
 
 
+#This page displays a table of all the books read by the user that is currently logged in.
 @app.route('/journal')
 def journal():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404() #Checks the database of users for the currently logged in user
@@ -42,6 +43,7 @@ def books():
     book = models.Books.query.all() #All books
     return render_template("allbooks.html", book=book, page_title="Books")
 
+
 #The code that allows users to click on book in the table and be taken to a page specifically about that book.
 @app.route('/book/<title>')
 def book(title):
@@ -49,18 +51,21 @@ def book(title):
     return render_template('book.html', book=book, page_title=title)
 
 
+#Allows for users to go to a page dedicated to a specific author.
 @app.route('/author/<name>')
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
     return render_template('author.html', author=author, book=book, page_title=author)
 
 
+#Allows for users to go to a page dedicated to a specific genre.
 @app.route('/genre/<name>')
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
     return render_template('genre.html', genre=genre, page_title=genre)
 
 
+#Allows for users to make changes to the database.
 @app.route('/update', methods=["GET", "POST"])
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
@@ -70,6 +75,7 @@ def update():
     return render_template("update.html", user=user, genre_list=genre_list, author_list=author_list, userid=user, book=book, page_title="Update")
 
 
+#Function that updates a book title.
 @app.route('/updatetitle', methods=["POST"])
 def updatetitle():
     try:
@@ -84,6 +90,7 @@ def updatetitle():
     return redirect("/journal")
 
 
+#Function that updates the authors of a book, allowing for a book to have multiple authors.
 @app.route('/updateauthor/<int:book_id>', methods=["POST"])
 def updateauthor(book_id):
     try:
@@ -108,12 +115,16 @@ def updateauthor(book_id):
     return redirect("/journal")
 
 
+
+
+
+#WIP code to upload book cover images. Might just scrap this idea though.
 @app.route('/upload', methods=["GET", "POST"])
 def upload():
     return redirect("/")
 
 
-
+#Allows users to search the database for a book to add to their database.
 @app.route('/selectbook', methods=["GET", "POST"])
 def selectbook():
     if request.form:
@@ -127,9 +138,10 @@ def selectbook():
         except Exception as e:
             print("Could not add book")
             print(e)  
-    return redirect("/")
+    return redirect("/journal   ")
 
 
+#Allows users to add a new book to the database and their journal.
 @app.route('/addbook', methods=["GET", "POST"])
 def addbook():
     if request.form:
@@ -156,21 +168,20 @@ def addbook():
     return redirect("/")
    
 
+#Now deletes a book only from a particular user's journal and not everybody's.
 @app.route("/delete", methods=["POST"])
-def delete():
-    #user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404() 
-    title = request.form.get("title")
+def delete():    title = request.form.get("title")
     book = db.session.query(models.Books).filter_by(title=title).first()
-    #05/08 update, currently thinking of trying to only delete the book from a specific user's journal
-    #rather than delete it entirely from the database. I might retain the original delete for use by an admin account only.
-    db.session.delete(book)
+    user = current_user()
+    print(user.books)
+    user.books.remove(book)
     db.session.commit()
     return redirect("/journal")
 
-#This function gets the current user
+#This function gets the current user, letting us now whose journal needs to be displayed.
 def current_user(): 
     if session.get("user"): # if it is able to get a session for user
-        return models.Users.query.get(session["user"]) # return the user info
+        return db.session.query(models.Users).get(session["user"]) # return the user info
     else:
         return False
 
