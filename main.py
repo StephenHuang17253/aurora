@@ -23,7 +23,6 @@ db = SQLAlchemy(app)
 
 
 import models
-import forms
 
 
 @app.route('/')
@@ -115,9 +114,6 @@ def updateauthor(book_id):
     return redirect("/journal")
 
 
-
-
-
 #WIP code to upload book cover images. Might just scrap this idea though.
 @app.route('/upload', methods=["GET", "POST"])
 def upload():
@@ -170,7 +166,8 @@ def addbook():
 
 #Now deletes a book only from a particular user's journal and not everybody's.
 @app.route("/delete", methods=["POST"])
-def delete():    title = request.form.get("title")
+def delete():    
+    title = request.form.get("title")
     book = db.session.query(models.Books).filter_by(title=title).first()
     user = current_user()
     print(user.books)
