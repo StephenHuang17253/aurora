@@ -18,7 +18,7 @@
 /*Main Colour Theme */
 
 :root {
-    --bg-color: #1a2b3e;
+    --bg-color: #131921; /*Old Colour: #1a2b3e*/
     --main-color: #af8f5c;
     --sub-color: #3a506c;
     --text-color: #c9c8bf;
