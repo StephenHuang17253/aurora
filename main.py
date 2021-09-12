@@ -219,8 +219,10 @@ def logout(): # logout function
 def signup(): # create account / register function
     if request.method == "POST":
         if len(request.form.get('username')) > 20: # if the inputted username is greater than 20 characters it will not be accepted
+            flash("Username exceeds limit of 20 characters") #Informs user that their username exceeds 20 characters            
             return render_template('signup.html', error='Username exceeds limit of 20 characters') # prompts the user to create a shorter username
         elif models.Users.query.filter(models.Users.username == request.form.get("username")).first():
+            flash("Name already in use") #Informs user that their name is already in use
             return render_template('signup.html', error='Username already in use') # prompts the user to create a unique username
         else:
             user_info = models.Users (  
