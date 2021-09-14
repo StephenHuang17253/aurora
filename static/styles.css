@@ -79,6 +79,7 @@ tr:hover {
     text-shadow: 0 0 1px var(--main-color), 0 0 1px var(--text-color);
 }
 
+/* Beginning of Navbar styling*/
 ul {
     list-style-type: none;
     margin: 0;
@@ -114,8 +115,9 @@ li:nth-child(5) {
 li:last-child {
     float: right;
 }
+/* End of Navbar styling*/
 
-
+/* Beginning of Forms styling*/
 input {
     padding: 8px 10px;
     box-sizing: border-box;
@@ -163,7 +165,9 @@ input[type=file]:hover {
 input[type=submit] {
     width: 290px;
 }
+/* End of Forms styling*/
 
+/* Beginning of Table Styling*/
 table {
     border-collapse: collapse;
     margin: auto;
@@ -186,12 +190,12 @@ th {
     color: var(--text-color);
     border-bottom: thin solid var(--text-color);    
 }
-
+/* End of Table Styling */
 .content {
     margin: auto;
 }
             
-
+/* Beginning of Link Styling */
 a:link {
     color: var(--text-color);
     background-color: transparent;
@@ -216,7 +220,9 @@ a:active {
     background-color: transparent;
     text-decoration: underline;
 }
+/* End of Link Styling */
 
+/* Beginning of Button Styling */
 .button {
     transition-duration: 0.25  s;
     cursor: pointer;
@@ -236,6 +242,12 @@ a:active {
     background-color: var(--button-color-red); 
 }
 
+.button[value=Remove]:hover{
+    background-color: var(--button-color-red); 
+}
+/* End of Button Styling */
+
+/*Footer*/
 footer {
     padding-top: 20px;
     left: 0;

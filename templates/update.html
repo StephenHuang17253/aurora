@@ -16,7 +16,7 @@
 <form method="POST" action="/addbook" autocomplete="off">
     <input type="text" id="title" name="title" placeholder="Title here...">
     <input type="text" id="year" name="year" placeholder="Year of release here...">
-    <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here... (Optional)">    
+    <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here...">    
     <input list="genres" name="genres" placeholder="Start typing and genres will appear...">
     <datalist id="genres" >
     {% for genre in genre_list %}
@@ -33,8 +33,6 @@
   </form>
 
 
-
-
 <br><h1>Make changes to your journal</h1>
 <table id="editjournal"> 
     <tr>
@@ -42,8 +40,8 @@
         <th colspan = 2>Author</th>            
         <th colspan = 1>Genre</th>
         <th colspan = 1>Year</th>
-        <th colspan = 1>Book Cover</th>
-        <th colspan = 1>Delete Book</th>
+        <th colspan = 1>Synopsis</th>
+        <th colspan = 1>Remove</th>
     </tr>     
 {% for book in user.books %}
     <tr> 
@@ -74,16 +72,16 @@
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
         <td>{{ book.year }}</td>      
         <td>
-          <form action="/upload">
-            <label for='bookcover'>Upload a book cover</label>
-            <input type="file" id="bookcover" name="bookcover" accept="image/*">
-            <input type="submit">
-          </form>  
+          <form method="POST" action='/updatesynopsis' style="display: inline" autocomplete="off">
+            <input type="hidden" value="{{book.synopsis}}" name="oldsynopsis">
+            <input type="text" value="{{book.synopsis}}" name="newsynopsis">
+            <input type="submit" class="button" value="Update">          
+          </form>
         </td>              
         <td>
           <form method="POST" action="/delete" style="display: inline">
             <input type="hidden" value="{{book.title}}" name="title">
-            <input type="submit" class="button" value="Delete">
+            <input type="submit" class="button" value="Remove">
           </form>
         </td>
     </tr>

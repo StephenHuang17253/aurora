@@ -74,7 +74,7 @@ def update():
     return render_template("update.html", user=user, genre_list=genre_list, author_list=author_list, userid=user, book=book, page_title="Update")
 
 
-#Function that updates a book title.
+#Function that updates a book's title.
 @app.route('/updatetitle', methods=["POST"])
 def updatetitle():
     try:
@@ -86,10 +86,26 @@ def updatetitle():
     except Exception as e:
         print("Could not update title")
         print(e)
+        return redirect("404.html")
     return redirect("/journal")
 
 
-#Function that updates the authors of a book, allowing for a book to have multiple authors.
+#Function that updates a book's synopsis.
+@app.route('/updatesynopsis', methods=["POST"])
+def updatesynopsis():
+    try:
+        newsynopsis = request.form.get("newsynopsis") #Requests the new book synopsis.
+        oldsynopsis = request.form.get("oldsynopsis") #Requests the old book synopsis.
+        book = db.session.query(models.Books).filter_by(synopsis=oldsynopsis).first_or_404() #Gets the first book with a synopsis that matches.
+        book.synopsis = newsynopsis #Sets the synopsis of the book to be equal to the new synopsis from the form.
+        db.session.commit()
+    except Exception as e:
+        print("Could not update book synopsis")
+        print(e)
+        return redirect("404.html")
+    return redirect("/journal")
+
+#Function that updates the authors of a book, allowing for a book to have multiple authors or for the correction of typos.
 @app.route('/updateauthor/<int:book_id>', methods=["POST"])
 def updateauthor(book_id):
     try:
@@ -134,6 +150,7 @@ def selectbook():
         except Exception as e:
             print("Could not add book")
             print(e)  
+            return redirect("404.html")
     return redirect("/journal   ")
 
 
@@ -154,7 +171,7 @@ def addbook():
         author = db.session.query(models.Authors).filter_by(name=author_name).first()
         if author is None:
             author = models.Authors(name=author_name)
-        user = db.session.query(models.Users).filter_by(userid=session['user']).first_or_404()
+        user = db.session.query(models.Users).filter_by(userid=session['user']).first()
         db.session.add(new_book)             
         db.session.commit()
         new_book.users.append(user)
