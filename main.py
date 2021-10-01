@@ -30,41 +30,41 @@ def home():
     return render_template("home.html", page_title="Home")
 
 
-#This page displays a table of all the books read by the user that is currently logged in.
+# This page displays a table of all the books read by the user that is currently logged in.
 @app.route('/journal')
 def journal():
-    user = models.Users.query.filter_by(userid=session['user']).first_or_404() #Checks the database of users for the currently logged in user
+    user = models.Users.query.filter_by(userid=session['user']).first_or_404()  # Checks the database of users for the currently logged in user
     return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
 @app.route('/books')
 def books():
-    book = models.Books.query.all() #All books
+    book = models.Books.query.all()  # All books
     return render_template("allbooks.html", book=book, page_title="Books")
 
 
-#The code that allows users to click on book in the table and be taken to a page specifically about that book.
+# The code that allows users to click on book in the table and be taken to a page specifically about that book.
 @app.route('/book/<title>')
 def book(title):
     book = models.Books.query.filter_by(title=title).first_or_404() 
     return render_template('book.html', book=book, page_title=title)
 
 
-#Allows for users to go to a page dedicated to a specific author.
+# Allows for users to go to a page dedicated to a specific author.
 @app.route('/author/<name>')
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
     return render_template('author.html', author=author, book=book, page_title=author)
 
 
-#Allows for users to go to a page dedicated to a specific genre.
+# Allows for users to go to a page dedicated to a specific genre.
 @app.route('/genre/<name>')
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
     return render_template('genre.html', genre=genre, page_title=genre)
 
 
-#Allows for users to make changes to the database.
+# Allows for users to make changes to the database.
 @app.route('/update', methods=["GET", "POST"])
 def update():
     user = models.Users.query.filter_by(userid=session['user']).first_or_404()
@@ -128,12 +128,6 @@ def updateauthor(book_id):
         print("Could not update author")
         print(e)
     return redirect("/journal")
-
-
-#WIP code to upload book cover images. Might just scrap this idea though.
-@app.route('/upload', methods=["GET", "POST"])
-def upload():
-    return redirect("/")
 
 
 #Allows users to search the database for a book to add to their database.
@@ -218,6 +212,7 @@ def login():
             return redirect('/') # redirects to home page
 
         else:
+            flash("\nUsername or password was incorrect. Do you have caps lock on?")
             return render_template('login.html', error='Username either exceeds limit of 20 characters or does not exist')
     return render_template("login.html", page_title="Login") # the html template for this is login.html
 
@@ -236,10 +231,10 @@ def logout(): # logout function
 def signup(): # create account / register function
     if request.method == "POST":
         if len(request.form.get('username')) > 20: # if the inputted username is greater than 20 characters it will not be accepted
-            flash("Username exceeds limit of 20 characters") #Informs user that their username exceeds 20 characters            
+            flash("\nUsername exceeds limit of 20 characters") # Informs user that their username exceeds 20 characters            
             return render_template('signup.html', error='Username exceeds limit of 20 characters') # prompts the user to create a shorter username
         elif models.Users.query.filter(models.Users.username == request.form.get("username")).first():
-            flash("Name already in use") #Informs user that their name is already in use
+            flash("\nName already in use") # Informs user that their name is already in use
             return render_template('signup.html', error='Username already in use') # prompts the user to create a unique username
         else:
             user_info = models.Users (  
@@ -248,7 +243,7 @@ def signup(): # create account / register function
             )
             db.session.add(user_info) # adds the data to the database
             db.session.commit() # commits the add
-            flash("You have succesfully registed an Aurora account.") # tells the user they have succesfully logged in.
+            flash("\nYou have succesfully registed an Aurora account.") # tells the user they have succesfully logged in.
     return render_template('signup.html', page_title="Signup")
 
 

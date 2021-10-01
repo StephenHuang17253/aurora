@@ -14,16 +14,16 @@
 <h2>Didn't find what you were looking for?</h2>
 <h1>Add it here!</h1>
 <form method="POST" action="/addbook" autocomplete="off">
-    <input type="text" id="title" name="title" placeholder="Title here...">
-    <input type="text" id="year" name="year" placeholder="Year of release here...">
-    <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here...">    
-    <input list="genres" name="genres" placeholder="Start typing and genres will appear...">
+    <input type="text" id="title" name="title" placeholder="Title here..." required>
+    <input type="text" id="year" name="year" placeholder="Year of release here..." required>
+    <input type="text" id="sypnopsis" name="synopsis" placeholder="Paste a sypnosis here..." required>    
+    <input list="genres" name="genres" placeholder="Start typing and genres will appear..." required>
     <datalist id="genres" >
     {% for genre in genre_list %}
       <option value="{{ genre.name }}">{{ genre.name }}</option>
     {% endfor %}
     </datalist>
-    <input list="author" name="author" placeholder="Start typing and authors will appear...">
+    <input list="author" name="author" placeholder="Start typing and authors will appear..."required>
     <datalist id="author" >
     {% for author in author_list %}
       <option value="{{ author.name }}">{{ author.name }}</option>
