@@ -57,14 +57,14 @@ def book(title):
 @app.route('/author/<name>')
 def author(name):
     author = models.Authors.query.filter_by(name=name).first_or_404()
-    return render_template('author.html', author=author, book=book, page_title=author)
+    return render_template('author.html', author=author, book=book, page_title=author.name)
 
 
 #  Allows for users to go to a page dedicated to a specific genre.
 @app.route('/genre/<name>')
 def genre(name):
     genre = models.Genres.query.filter_by(name=name).first_or_404()
-    return render_template('genre.html', genre=genre, page_title=genre)
+    return render_template('genre.html', genre=genre, page_title=genre.name)
 
 
 #  Allows for users to make changes to the database.
