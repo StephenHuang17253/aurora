@@ -39,7 +39,7 @@
         <th colspan = 2>Title</th>
         <th colspan = 2>Author</th>            
         <th colspan = 1>Genre</th>
-        <th colspan = 1>Year</th>
+        <th colspan = 2>Year</th>
         <th colspan = 1>Synopsis</th>
         <th colspan = 1>Remove</th>
     </tr>     
@@ -70,7 +70,15 @@
           </form>
         </td>
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-        <td>{{ book.year }}</td>      
+        <td>{{ book.year }}</td> 
+        <td>
+          <form method="POST" action='/updateyear' style="display: inline" autocomplete="off">
+            <input type="hidden" value="{{book.title}}" name="title">
+            <input type="hidden" value="{{book.year}}" name="oldyear">
+            <input type="text" value="{{book.year}}" name="newyear">
+            <input type="submit" class="button" value="Update">          
+          </form>
+        </td>           
         <td>
           <form method="POST" action='/updatesynopsis' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.synopsis}}" name="oldsynopsis">

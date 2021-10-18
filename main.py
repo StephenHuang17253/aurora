@@ -112,6 +112,23 @@ def updatesynopsis():
     return redirect("/journal")
 
 
+# Function that updates a book's year of release.
+@app.route('/updateyear', methods=["POST"])
+def updateyear():
+    try:
+        title = request.form.get("title")
+        newyear = request.form.get("newyear") # Requests the new book year.
+        oldyear = request.form.get("oldyear") # Requests the old book year.
+        book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Gets the first book with a year that matches.
+        book.year = newyear # Sets the year of the book to be equal to the new year from the form.
+        db.session.commit()
+    except Exception as e:
+        print("Could not update book year")
+        print(e)
+        return redirect("404.html")
+    return redirect("/journal")
+
+
 # Function that updates the authors of a book, allowing for a book to have multiple authors or for the correction of typos.
 @app.route('/updateauthor/<int:book_id>', methods=["POST"])
 def updateauthor(book_id):
