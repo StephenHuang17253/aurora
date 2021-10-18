@@ -33,7 +33,10 @@ def home():
 #  This page displays a table of all the books read by the user that is currently logged in.
 @app.route('/journal')
 def journal():
-    user = models.Users.query.filter_by(userid=session['user']).first_or_404()  #  Checks the database of users for the currently logged in user
+    try: 
+        user = models.Users.query.filter_by(userid=session['user']).first_or_404()  #  Checks the database of users for the currently logged in user
+    except Exception as e:
+        return redirect("404.html") 
     return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
@@ -67,7 +70,10 @@ def genre(name):
 #  Allows for users to make changes to the database.
 @app.route('/update', methods=["GET", "POST"])
 def update():
-    user = models.Users.query.filter_by(userid=session['user']).first_or_404()
+    try: 
+        user = models.Users.query.filter_by(userid=session['user']).first_or_404()  #  Checks the database of users for the currently logged in user
+    except Exception as e:
+        return redirect("404.html") 
     author_list = models.Authors.query.all()
     genre_list = models.Genres.query.all()
     book = models.Books.query.all()
@@ -104,6 +110,7 @@ def updatesynopsis():
         print(e)
         return redirect("404.html")
     return redirect("/journal")
+
 
 # Function that updates the authors of a book, allowing for a book to have multiple authors or for the correction of typos.
 @app.route('/updateauthor/<int:book_id>', methods=["POST"])
@@ -185,6 +192,7 @@ def delete():
     user.books.remove(book)
     db.session.commit()
     return redirect("/journal")
+
 
 # This function gets the current user, letting us now whose journal needs to be displayed.
 def current_user(): 
