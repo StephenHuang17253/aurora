@@ -119,7 +119,7 @@ def updateyear():
         title = request.form.get("title")
         newyear = request.form.get("newyear") # Requests the new book year.
         oldyear = request.form.get("oldyear") # Requests the old book year.
-        book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Gets the first book with a year that matches.
+        book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Find the book we're looking for.
         book.year = newyear # Sets the year of the book to be equal to the new year from the form.
         db.session.commit()
     except Exception as e:

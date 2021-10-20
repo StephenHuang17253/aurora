@@ -36,16 +36,16 @@
 <br><h1>Make changes to your journal</h1>
 <table id="editjournal"> 
     <tr>
-        <th colspan = 2>Title</th>
-        <th colspan = 2>Author</th>            
+        <th colspan = 1>Title</th>
+        <th colspan = 1>Author</th>            
         <th colspan = 1>Genre</th>
-        <th colspan = 2>Year</th>
+        <th colspan = 1>Year</th>
         <th colspan = 1>Synopsis</th>
         <th colspan = 1>Remove</th>
     </tr>     
 {% for book in user.books %}
     <tr> 
-        <td> <a href="/book/{{book.title}}">{{ book.title }}</a></td>
+
         <td>
           <form method="POST" action='/updatetitle' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="oldtitle">
@@ -53,7 +53,7 @@
             <input type="submit" class="button" value="Update">          
           </form>
        </td>
-        <td> <a href="/author/{{ book.authors|join(', ', attribute='name') }}">{{ book.authors|map(attribute="name")|join(", ") }}</a></td>
+
         <td>
           <form method="POST" action='/updateauthor/{{ book.bookid }}' style="display: inline" autocomplete="off">
             <datalist id="author-list">
@@ -70,7 +70,7 @@
           </form>
         </td>
         <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-        <td>{{ book.year }}</td> 
+
         <td>
           <form method="POST" action='/updateyear' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="title">
