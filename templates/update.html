@@ -69,8 +69,14 @@
             <div><input type="button" class="button add-author" value="Add another author"><input type="submit" class="button update" value="Update"></div>
           </form>
         </td>
-        <td> <a href="/genre/{{ book.genres|join(', ', attribute='name') }}">{{ book.genres|map(attribute="name")|join(", ") }}</a></td>
-
+        <td>
+          <form method="POST" action='/updategenre' style="display: inline" autocomplete="off">
+            <input type="hidden" value="{{book.title}}" name="title">
+            <input type="hidden" value="{{book.genres}}" name="oldgenre">
+            <input type="text" value="{{book.genres}}" name="newgenre">
+            <input type="submit" class="button" value="Update">          
+          </form>
+        </td>  
         <td>
           <form method="POST" action='/updateyear' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="title">
@@ -78,7 +84,7 @@
             <input type="text" value="{{book.year}}" name="newyear">
             <input type="submit" class="button" value="Update">          
           </form>
-        </td>           
+        </td>                
         <td>
           <form method="POST" action='/updatesynopsis' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.synopsis}}" name="oldsynopsis">

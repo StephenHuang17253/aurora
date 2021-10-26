@@ -129,6 +129,23 @@ def updateyear():
     return redirect("/journal")
 
 
+# Function that updates a book's genre.
+@app.route('/updategenre', methods=["POST"])
+def updategenre():
+    try:
+        title = request.form.get("title")
+        newgenre = request.form.get("newgenre") # Requests the new book genre.
+        oldgenre = request.form.get("oldgenre") # Requests the old book genre.
+        book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Find the book we're looking for.
+        book.genres = newgenre # Sets the genre of the book to be equal to the new genre from the form.
+        db.session.commit()
+    except Exception as e:
+        print("Could not update book gear")
+        print(e)
+        return redirect("404.html")
+    return redirect("/journal")
+
+
 # Function that updates the authors of a book, allowing for a book to have multiple authors or for the correction of typos.
 @app.route('/updateauthor/<int:book_id>', methods=["POST"])
 def updateauthor(book_id):
