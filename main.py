@@ -93,7 +93,7 @@ def updatetitle():
         print("Could not update title")
         print(e)
         return redirect("404.html")
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # Function that updates a book's synopsis.
@@ -109,7 +109,7 @@ def updatesynopsis():
         print("Could not update book synopsis")
         print(e)
         return redirect("404.html")
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # Function that updates a book's year of release.
@@ -126,7 +126,7 @@ def updateyear():
         print("Could not update book year")
         print(e)
         return redirect("404.html")
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # Function that updates a book's genres, allowing for a book to have multiple genres or for the correction of typos.
@@ -152,7 +152,7 @@ def updategenre(book_id):
         print("Could not update genre")
         print(e)
         return redirect("404.html")
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # Function that updates the authors of a book, allowing for a book to have multiple authors or for the correction of typos.
@@ -178,7 +178,7 @@ def updateauthor(book_id):
         print("Could not update author")
         print(e)
         return redirect("404.html")
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # Allows users to search the database for a book to add to their database.
@@ -196,7 +196,7 @@ def selectbook():
             print("Could not add book")
             print(e)  
             return redirect("404.html")
-    return redirect("/journal   ")
+    return redirect("/journal")
 
 
 # Allows users to add a new book to the database and their journal.
@@ -223,7 +223,7 @@ def addbook():
         new_book.authors.append(author)        
         new_book.genres.append(genre)  
         db.session.commit()          
-    return redirect("/")
+    return redirect("/update")
    
 
 # Now deletes a book only from a particular user's journal and not everybody's.
@@ -235,7 +235,7 @@ def delete():
     print(user.books)
     user.books.remove(book)
     db.session.commit()
-    return redirect("/journal")
+    return redirect("/update")
 
 
 # This function gets the current user, letting us now whose journal needs to be displayed.
