@@ -129,18 +129,27 @@ def updateyear():
     return redirect("/journal")
 
 
-# Function that updates a book's genre.
-@app.route('/updategenre', methods=["POST"])
-def updategenre():
+# Function that updates a book's genres, allowing for a book to have multiple genres or for the correction of typos.
+@app.route('/updategenre/<int:book_id>', methods=["POST"])
+def updategenre(book_id):
     try:
-        title = request.form.get("title")
-        newgenre = request.form.get("newgenre") # Requests the new book genre.
-        oldgenre = request.form.get("oldgenre") # Requests the old book genre.
-        book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Find the book we're looking for.
-        book.genres = newgenre # Sets the genre of the book to be equal to the new genre from the form.
+        genres = request.form.getlist('genre')
+        genre_models = []
+        for genre_name in genres:
+            if genre_name.strip() == '':
+                continue
+            genre = models.Genres.query.filter_by(name=genre_name).first()
+            if genre is None:
+                genre = models.Genres(name=genre)
+                db.session.add(genre)
+            genre_models.append(db.session.merge(genre))
+        print(genres)
+        book = models.Books.query.get(book_id)
+        book = db.session.merge(book)
+        book.genres = genre_models
         db.session.commit()
     except Exception as e:
-        print("Could not update book gear")
+        print("Could not update genre")
         print(e)
         return redirect("404.html")
     return redirect("/journal")
@@ -168,6 +177,7 @@ def updateauthor(book_id):
     except Exception as e:
         print("Could not update author")
         print(e)
+        return redirect("404.html")
     return redirect("/journal")
 
 

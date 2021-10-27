@@ -70,13 +70,20 @@
           </form>
         </td>
         <td>
-          <form method="POST" action='/updategenre' style="display: inline" autocomplete="off">
-            <input type="hidden" value="{{book.title}}" name="title">
-            <input type="hidden" value="{{book.genres}}" name="oldgenre">
-            <input type="text" value="{{book.genres}}" name="newgenre">
-            <input type="submit" class="button" value="Update">          
+          <form method="POST" action='/updategenre/{{ book.bookid }}' style="display: inline" autocomplete="off">
+            <datalist id="genre-list">
+              {% for genre in genre_list %}
+                <option value="{{ genre.name }}">{{ genre.name }}</option>
+              {% endfor %}
+            </datalist>
+            <div class="genres">
+              {% for genre in book.genres %}
+                <input list="genre-list" name="genre" value="{{ genre.name }}" />
+              {% endfor %}
+            </div>
+            <div><input type="button" class="button add-genre" value="Add another genre"><input type="submit" class="button update" value="Update"></div>
           </form>
-        </td>  
+        </td>
         <td>
           <form method="POST" action='/updateyear' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="title">
