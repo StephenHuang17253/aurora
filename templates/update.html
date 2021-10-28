@@ -54,6 +54,7 @@
           </form>
        </td>
 
+
         <td>
           <form method="POST" action='/updateauthor/{{ book.bookid }}' style="display: inline" autocomplete="off">
             <datalist id="author-list">
@@ -69,6 +70,8 @@
             <div><input type="button" class="button add-author" value="Add another author"><input type="submit" class="button update" value="Update"></div>
           </form>
         </td>
+
+
         <td>
           <form method="POST" action='/updategenre/{{ book.bookid }}' style="display: inline" autocomplete="off">
             <datalist id="genre-list">
@@ -84,21 +87,26 @@
             <div><input type="button" class="button add-genre" value="Add another genre"><input type="submit" class="button update" value="Update"></div>
           </form>
         </td>
+
+
         <td>
           <form method="POST" action='/updateyear' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.title}}" name="title">
-            <input type="hidden" value="{{book.year}}" name="oldyear">
             <input type="text" value="{{book.year}}" name="newyear">
             <input type="submit" class="button" value="Update">          
           </form>
-        </td>                
+        </td>              
+
+
         <td>
           <form method="POST" action='/updatesynopsis' style="display: inline" autocomplete="off">
             <input type="hidden" value="{{book.synopsis}}" name="oldsynopsis">
             <input type="text" value="{{book.synopsis}}" name="newsynopsis">
             <input type="submit" class="button" value="Update">          
           </form>
-        </td>              
+        </td>         
+        
+        
         <td>
           <form method="POST" action="/delete" style="display: inline">
             <input type="hidden" value="{{book.title}}" name="title">
@@ -108,6 +116,8 @@
     </tr>
 {% endfor %}
 </table>
+
+
 <script>
   function addAuthor (event) {
     // find the authors div

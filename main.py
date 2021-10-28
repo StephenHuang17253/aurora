@@ -40,9 +40,10 @@ def journal():
     return render_template("journal.html", user=user, userid=user, page_title="Journal")
 
 
+#  All books
 @app.route('/books')
 def books():
-    book = models.Books.query.all()  #  All books
+    book = models.Books.query.all()  
     return render_template("allbooks.html", book=book, page_title="Books")
 
 
@@ -84,10 +85,10 @@ def update():
 @app.route('/updatetitle', methods=["POST"])
 def updatetitle():
     try:
-        newtitle = request.form.get("newtitle") # First we request the new title.
-        oldtitle = request.form.get("oldtitle") # Then we look for the old title.
-        book = db.session.query(models.Books).filter_by(title=oldtitle).first_or_404() # Finds the first book title that matches the old title.
-        book.title = newtitle # Sets the title of the book to the new title.
+        new_title = request.form.get("newtitle") # First we request the new title.
+        old_title = request.form.get("oldtitle") # Then we look for the old title.
+        book = db.session.query(models.Books).filter_by(title=old_title).first_or_404() # Finds the first book title that matches the old title.
+        book.title = new_title # Sets the title of the book to the new title.
         db.session.commit()
     except Exception as e:
         print("Could not update title")
@@ -100,10 +101,10 @@ def updatetitle():
 @app.route('/updatesynopsis', methods=["POST"])
 def updatesynopsis():
     try:
-        newsynopsis = request.form.get("newsynopsis") # Requests the new book synopsis.
-        oldsynopsis = request.form.get("oldsynopsis") # Requests the old book synopsis.
-        book = db.session.query(models.Books).filter_by(synopsis=oldsynopsis).first_or_404() # Gets the first book with a synopsis that matches.
-        book.synopsis = newsynopsis # Sets the synopsis of the book to be equal to the new synopsis from the form.
+        new_synopsis = request.form.get("newsynopsis") # Requests the new book synopsis.
+        old_synopsis = request.form.get("oldsynopsis") # Requests the old book synopsis.
+        book = db.session.query(models.Books).filter_by(synopsis=old_synopsis).first_or_404() # Gets the first book with a synopsis that matches.
+        book.synopsis = new_synopsis # Sets the synopsis of the book to be equal to the new synopsis from the form.
         db.session.commit()
     except Exception as e:
         print("Could not update book synopsis")
@@ -117,10 +118,9 @@ def updatesynopsis():
 def updateyear():
     try:
         title = request.form.get("title")
-        newyear = request.form.get("newyear") # Requests the new book year.
-        oldyear = request.form.get("oldyear") # Requests the old book year.
+        new_year = request.form.get("newyear") # Requests the new book year.
         book = db.session.query(models.Books).filter_by(title=title).first_or_404() # Find the book we're looking for.
-        book.year = newyear # Sets the year of the book to be equal to the new year from the form.
+        book.year = new_year # Sets the year of the book to be equal to the new year from the form.
         db.session.commit()
     except Exception as e:
         print("Could not update book year")
@@ -262,7 +262,6 @@ def login():
         if User and check_password_hash(User.password, request.form.get("password")): #  checks to see if the password is correct
             session['user']=User.userid
             return redirect('/') #  redirects to home page
-
         else:
             flash("\nUsername or password was incorrect. Do you have caps lock on?")
             return render_template('login.html', error='Username either exceeds limit of 20 characters or does not exist')
