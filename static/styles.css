@@ -156,6 +156,7 @@ input:focus {
 /* Makes certain buttons go green */
 input[type=submit]:hover {
     background-color: var(--button-color-green);
+    cursor: pointer;
 }
 
 input[type=file]:hover {

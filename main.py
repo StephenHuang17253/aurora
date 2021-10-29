@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from random import randint, choice
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
-
+from forms import LoginForm
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -305,6 +305,22 @@ def add_current_user():
 
 @app.route('/login', methods=['GET', 'POST'])  # /Login page
 def login():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        print(login_form.login.data)
+        user = models.Users.query.filter(
+            models.Users.username == login_form.login.data).first()
+        if user and check_password_hash(
+            user.password, login_form.password.data):
+            session['user'] = user.userid
+            return redirect('/')
+        else:
+            return render_template(
+                'login.html',
+                error='Username or password is incorrect.',
+                login_form=login_form)
+    return render_template('login.html', login_form=login_form, page_title='Login')
+    """
     if session.get('user'):
         return redirect('/')  # redirects to home page
     if request.method == 'POST':  # request method
@@ -321,7 +337,7 @@ def login():
                 'login.html',
                 error='Username either exceeds limit of 20 characters or does not exist')
     # the html template for this is login.html
-    return render_template('login.html', page_title='Login')
+    """
 
 
 @app.route('/logout')  # /logout page
@@ -337,36 +353,37 @@ def logout():  # logout function
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():  # create account / register function
-    if request.method == 'POST':
-        # if the inputted username is greater than 20 characters it will not be
-        # accepted
-        if len(request.form.get('username')) > 20:
-            # Informs user that their username exceeds 20 characters
-            flash('\nUsername exceeds limit of 20 characters')
-            # prompts the user to create a shorter username
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        print(login_form.login.data)
+        if 5 > len(login_form.login.data) > 12:
+            # user is prompted to use a shorter/longer username
             return render_template(
                 'signup.html',
-                error='Username exceeds limit of 20 characters')
-        elif models.Users.query.filter(models.Users.username == request.form.get('username')).first():
-            # Informs user that their name is already in use
-            flash('\nName already in use')
-            # prompts the user to create a unique username
+                error='username must be between 5 and 12 characters')
+        elif models.Users.query.filter(models.Users.username == login_form.login.data).first():
+            # user is prompted to use a different username
             return render_template(
-                'signup.html', error='Username already in use')
+                'signup.html',
+                error='username already in use')
+        elif len(login_form.password.data) < 7:
+            # account will not be created and user is prompted to make a
+            # password of atleast 7 characters
+            return render_template(
+                'signup.html',
+                error='password must be a minimum of 7 characters')
         else:
             user_info = models.Users(
-                # requests username from the user as a form
-                username=request.form.get('username'),
-                # requests password from the user as a form then salts and
-                # hashes it with a salt length of 10
+                username=login_form.login.data, 
+                # takes password inputted in form and salts and hashes
                 password=generate_password_hash(
-                    request.form.get('password'), salt_length=10),
+                    login_form.password.data, salt_length=10),
             )
-            db.session.add(user_info)  # adds the data to the database
-            db.session.commit()  # commits the add
+            db.session.add(user_info)
+            db.session.commit()
             # tells the user they have succesfully logged in.
             flash('\nYou have succesfully registed an Aurora account.')
-    return render_template('signup.html', page_title='Signup')
+    return render_template('signup.html', login_form=login_form, page_title='Signup')
 
 
 @app.errorhandler(404)

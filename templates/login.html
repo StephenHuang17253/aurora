@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Login</h1>
-<form method="POST" name="login" autocomplete="off">
-    <input type="text" name="username" maxlength=20 placeholder="username (20 character limit)">
-    <input type="password" name="password" maxlgenth=20 placeholder="password (20 character limit)">
-    <input type="submit" class="button" value="Login">
+<form method="POST" name="login" action='/login' autocomplete="off">
+    {% for field in login_form %}
+        {{ field }}
+    {% endfor %}
 </form>
 {% endblock %}
