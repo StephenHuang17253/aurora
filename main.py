@@ -82,7 +82,7 @@ def genre(name):
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     try:
-        # Checks the database of users for the currently logged in user
+        # Checks the table of users for the currently logged in user
         user = models.Users.query.filter_by(
             userid=session['user']).first_or_404()
     except Exception as e:
@@ -315,29 +315,13 @@ def login():
             session['user'] = user.userid
             return redirect('/')
         else:
-            return render_template(
-                'login.html',
-                error='Username or password is incorrect.',
-                login_form=login_form)
-    return render_template('login.html', login_form=login_form, page_title='Login')
-    """
-    if session.get('user'):
-        return redirect('/')  # redirects to home page
-    if request.method == 'POST':  # request method
-        # form fillable to gain username variable:
-        User = models.Users.query.filter(
-            models.Users.username == request.form.get('username')).first()
-        if User and check_password_hash(User.password, request.form.get(
-                'password')):  # checks to see if the password is correct
-            session['user'] = User.userid
-            return redirect('/')  # redirects to home page
-        else:
             flash('\nUsername or password was incorrect. Do you have caps lock on?')
             return render_template(
                 'login.html',
-                error='Username either exceeds limit of 20 characters or does not exist')
-    # the html template for this is login.html
-    """
+                login_form=login_form,
+                page_title='Login', 
+                error='Username or password is incorrect.')
+    return render_template('login.html', login_form=login_form, page_title='Login')
 
 
 @app.route('/logout')  # /logout page
@@ -356,22 +340,31 @@ def signup():  # create account / register function
     login_form = LoginForm()
     if login_form.validate_on_submit():
         print(login_form.login.data)
-        if 5 > len(login_form.login.data) > 12:
-            # user is prompted to use a shorter/longer username
+        if len(login_form.login.data) > 12:
+            # user is prompted to use a shorter username
+            flash('\nSorry, that username exceeds the 12 character limit.')
             return render_template(
                 'signup.html',
-                error='username must be between 5 and 12 characters')
+                page_title='Signup',
+                login_form=login_form,
+                error='username must be shorter than 12 characters')
         elif models.Users.query.filter(models.Users.username == login_form.login.data).first():
             # user is prompted to use a different username
+            flash('\n\nUsername already in use')
             return render_template(
                 'signup.html',
+                page_title='Signup',
+                login_form=login_form,
                 error='username already in use')
-        elif len(login_form.password.data) < 7:
+        elif len(login_form.password.data) < 5:
             # account will not be created and user is prompted to make a
-            # password of atleast 7 characters
+            # password with atleast 5 characters
+            flash('\n\nPlease use a longer password (atleast 5 characters)')
             return render_template(
                 'signup.html',
-                error='password must be a minimum of 7 characters')
+                page_title='Signup',
+                login_form=login_form,
+                error='password must be a minimum of 5 characters')
         else:
             user_info = models.Users(
                 username=login_form.login.data, 

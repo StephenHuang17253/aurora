@@ -73,6 +73,9 @@ subhead {
     font-family: var(--font-body);
     padding: 10px;
 }
+synopsis {
+    width: 50%;
+}
 
 /* Creates the glow effect when hovering over something in the table. */
 tr:hover {

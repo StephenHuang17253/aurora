@@ -132,5 +132,18 @@
   })
 </script>
 
+<script>
+  function addGenre (event) {
+    // find the authors div
+    const genres = event.target.parentElement.parentElement.querySelector('.genres');
+    // add a new input to the element
+    // authors.innerHTML = authors.innerHTML + '<input list="author-list" name="author" />';
+    genres.insertAdjacentHTML('beforeend', '<input list="genre-list" name="genre" />')
+  }
+
+  document.querySelectorAll('.button.add-genre').forEach(function (button) {
+    button.addEventListener('click', addGenre);
+  })
+</script>
 {% endblock %}   
 
